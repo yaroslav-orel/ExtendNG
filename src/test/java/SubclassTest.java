@@ -15,9 +15,9 @@ public class SubclassTest extends BaseTest{
         Assert.assertEquals(afterMethodInGroupInvokedCount, 0);
     }
 
-    @Test(dependsOnMethods = "actualTest2")
+    @Test(dependsOnMethods = "actualTest")
     public void closingTest(){
-        Assert.assertEquals(beforeMethodInGroupInvokedCount, 2);
-        Assert.assertEquals(afterMethodInGroupInvokedCount, 2);
+        Assert.assertEquals(beforeMethodInGroupInvokedCount, 1);
+        Assert.assertEquals(afterMethodInGroupInvokedCount, 1);
     }
 }
