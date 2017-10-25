@@ -1,6 +1,8 @@
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+@Listeners(MethodInGroupListener.class)
 public class SubclassTest extends BaseTest{
 
     @Test

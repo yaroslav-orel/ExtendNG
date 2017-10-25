@@ -2,19 +2,17 @@ import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-@Listeners(MethodInGroupListener.class)
-public class MultipleInvokationTest {
-
+public class ListenerAbsentTest {
     private int beforeMethodInGroupInvokedCount = 0;
     private int afterMethodInGroupInvokedCount = 0;
 
     @BeforeMethodInGroup("target")
-    private void before(){
+    public void before(){
         beforeMethodInGroupInvokedCount += 1;
     }
 
     @AfterMethodInGroup("target")
-    private void after(){
+    public void after(){
         afterMethodInGroupInvokedCount += 1;
     }
 
@@ -24,13 +22,15 @@ public class MultipleInvokationTest {
         Assert.assertEquals(afterMethodInGroupInvokedCount, 0);
     }
 
-    @Test(groups = "target", dependsOnMethods = "startingTest", invocationCount = 3)
+    @Test(groups = "target", dependsOnMethods = "startingTest")
     public void actualTest(){
+        Assert.assertEquals(beforeMethodInGroupInvokedCount, 0);
+        Assert.assertEquals(afterMethodInGroupInvokedCount, 0);
     }
 
     @Test(dependsOnMethods = "actualTest")
     public void closingTest(){
-        Assert.assertEquals(beforeMethodInGroupInvokedCount, 3);
-        Assert.assertEquals(afterMethodInGroupInvokedCount, 3);
+        Assert.assertEquals(beforeMethodInGroupInvokedCount, 0);
+        Assert.assertEquals(afterMethodInGroupInvokedCount, 0);
     }
 }

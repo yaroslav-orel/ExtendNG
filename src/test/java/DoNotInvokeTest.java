@@ -1,6 +1,8 @@
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+@Listeners(MethodInGroupListener.class)
 public class DoNotInvokeTest {
 
     private int beforeMethodInGroupInvokedCount = 0;

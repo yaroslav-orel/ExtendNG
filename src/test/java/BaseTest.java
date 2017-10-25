@@ -1,3 +1,6 @@
+import org.testng.annotations.Listeners;
+
+@Listeners(MethodInGroupListener.class)
 public class BaseTest {
 
     protected int beforeMethodInGroupInvokedCount = 0;
