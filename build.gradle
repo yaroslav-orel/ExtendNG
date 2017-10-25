@@ -12,5 +12,8 @@ repositories {
 dependencies {
     compile group: 'org.testng', name: 'testng', version: '6.11'
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.6'
+}
 
+test{
+    useTestNG()
 }
