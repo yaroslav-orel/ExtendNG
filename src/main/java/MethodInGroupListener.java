@@ -12,7 +12,7 @@ public class MethodInGroupListener implements IInvokedMethodListener {
     @Override
     public void beforeInvocation(IInvokedMethod iInvokedMethod, ITestResult iTestResult) {
         if(iInvokedMethod.isTestMethod()){
-            Stream.of(iInvokedMethod.getTestMethod().getTestClass().getRealClass().getDeclaredMethods())
+            Stream.of(getAllMethods(iInvokedMethod.getTestMethod().getRealClass(), new Method[]{}))
                     .filter(method -> method.isAnnotationPresent(BeforeMethodInGroup.class))
                     .filter(method -> ArrayUtils.contains(iInvokedMethod.getTestMethod().getGroups(), method.getAnnotation(BeforeMethodInGroup.class).value()))
                     .findFirst()
@@ -26,7 +26,7 @@ public class MethodInGroupListener implements IInvokedMethodListener {
     @Override
     public void afterInvocation(IInvokedMethod iInvokedMethod, ITestResult iTestResult) {
         if(iInvokedMethod.isTestMethod()){
-            Stream.of(iInvokedMethod.getTestMethod().getTestClass().getRealClass().getDeclaredMethods())
+            Stream.of(getAllMethods(iInvokedMethod.getTestMethod().getRealClass(), new Method[]{}))
                     .filter(method -> method.isAnnotationPresent(AfterMethodInGroup.class))
                     .filter(method -> ArrayUtils.contains(iInvokedMethod.getTestMethod().getGroups(), method.getAnnotation(AfterMethodInGroup.class).value()))
                     .findFirst()
@@ -35,6 +35,15 @@ public class MethodInGroupListener implements IInvokedMethodListener {
                         invokeMethod(method, iTestResult);
                     });
         }
+    }
+
+    private Method[] getAllMethods(Class clazz, Method[] methods){
+        if(clazz.equals(Object.class))
+            return methods;
+        else
+            return  getAllMethods(clazz.getSuperclass(), ArrayUtils.addAll(methods, clazz.getDeclaredMethods()));
+
+
     }
 
     private void invokeMethod(Method method, ITestResult result){
