@@ -1,2 +1,4 @@
 rootProject.name = 'testng-helpers'
 
+include "groups"
+

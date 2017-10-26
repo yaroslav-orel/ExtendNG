@@ -1,19 +1,22 @@
 group 'org.yorel.auto'
 version '1.0-SNAPSHOT'
 
-apply plugin: 'java'
+allprojects{
+    apply plugin: 'java'
 
-sourceCompatibility = 1.8
+    sourceCompatibility = 1.8
 
-repositories {
-    mavenCentral()
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        compile group: 'org.testng', name: 'testng', version: '6.11'
+        compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.6'
+    }
+    test{
+        useTestNG()
+    }
 }
 
-dependencies {
-    compile group: 'org.testng', name: 'testng', version: '6.11'
-    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.6'
-}
 
-test{
-    useTestNG()
-}

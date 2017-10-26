@@ -1,11 +1,11 @@
 import org.apache.commons.lang3.ArrayUtils;
-import org.testng.*;
+import org.testng.IInvokedMethod;
+import org.testng.IInvokedMethodListener;
+import org.testng.ITestResult;
 import org.testng.annotations.Listeners;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.stream.Stream;
 
 import static java.util.Arrays.asList;
@@ -40,6 +40,7 @@ public class MethodInGroupListener implements IInvokedMethodListener {
         }
     }
 
+    @SuppressWarnings("unchecked")
     private boolean shouldBeInvoked(Class testClass){
         if(!testClass.isAnnotationPresent(Listeners.class))
             return false;
