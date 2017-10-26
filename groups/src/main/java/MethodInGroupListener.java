@@ -18,8 +18,7 @@ public class MethodInGroupListener implements IInvokedMethodListener {
             Stream.of(getAllMethods(iInvokedMethod.getTestMethod().getRealClass(), new Method[]{}))
                     .filter(method -> method.isAnnotationPresent(BeforeMethodInGroup.class))
                     .filter(method -> ArrayUtils.contains(iInvokedMethod.getTestMethod().getGroups(), method.getAnnotation(BeforeMethodInGroup.class).value()))
-                    .findFirst()
-                    .ifPresent(method -> {
+                    .forEach(method -> {
                         method.setAccessible(true);
                         invokeMethod(method, iTestResult);
                     });
@@ -32,8 +31,7 @@ public class MethodInGroupListener implements IInvokedMethodListener {
             Stream.of(getAllMethods(iInvokedMethod.getTestMethod().getRealClass(), new Method[]{}))
                     .filter(method -> method.isAnnotationPresent(AfterMethodInGroup.class))
                     .filter(method -> ArrayUtils.contains(iInvokedMethod.getTestMethod().getGroups(), method.getAnnotation(AfterMethodInGroup.class).value()))
-                    .findFirst()
-                    .ifPresent(method -> {
+                    .forEach(method -> {
                         method.setAccessible(true);
                         invokeMethod(method, iTestResult);
                     });
