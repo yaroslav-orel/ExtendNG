@@ -6,6 +6,7 @@ import org.testng.annotations.Listeners;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Comparator;
 import java.util.stream.Stream;
 
 import static java.util.Arrays.asList;
@@ -18,6 +19,7 @@ public class MethodInGroupListener implements IInvokedMethodListener {
             Stream.of(getAllMethods(iInvokedMethod.getTestMethod().getRealClass(), new Method[]{}))
                     .filter(method -> method.isAnnotationPresent(BeforeMethodInGroup.class))
                     .filter(method -> ArrayUtils.contains(iInvokedMethod.getTestMethod().getGroups(), method.getAnnotation(BeforeMethodInGroup.class).value()))
+                    .sorted(Comparator.comparingInt(method -> method.getAnnotation(BeforeMethodInGroup.class).priority()))
                     .forEach(method -> {
                         method.setAccessible(true);
                         invokeMethod(method, iTestResult);
@@ -31,6 +33,7 @@ public class MethodInGroupListener implements IInvokedMethodListener {
             Stream.of(getAllMethods(iInvokedMethod.getTestMethod().getRealClass(), new Method[]{}))
                     .filter(method -> method.isAnnotationPresent(AfterMethodInGroup.class))
                     .filter(method -> ArrayUtils.contains(iInvokedMethod.getTestMethod().getGroups(), method.getAnnotation(AfterMethodInGroup.class).value()))
+                    .sorted(Comparator.comparingInt(method -> method.getAnnotation(AfterMethodInGroup.class).priority()))
                     .forEach(method -> {
                         method.setAccessible(true);
                         invokeMethod(method, iTestResult);

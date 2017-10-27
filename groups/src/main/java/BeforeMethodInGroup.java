@@ -7,4 +7,5 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD})
 public @interface BeforeMethodInGroup {
     String value();
+    int priority() default 0;
 }
