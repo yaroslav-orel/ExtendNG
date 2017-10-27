@@ -29,7 +29,6 @@ public class OrderTest {
     @Test(groups = "target")
     public void beforesExecuteInPriorityOrder(){
         Assert.assertEquals(beforeMethodInGroupInvokedCount, "before1 before2 ");
-        Assert.assertEquals(afterMethodInGroupInvokedCount, "");
     }
 
     @Test(dependsOnMethods = "beforesExecuteInPriorityOrder")

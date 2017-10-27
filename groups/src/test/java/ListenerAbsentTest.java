@@ -15,21 +15,13 @@ public class ListenerAbsentTest {
         afterMethodInGroupInvokedCount += 1;
     }
 
-    @Test
-    public void startingTest(){
+    @Test(groups = "target")
+    public void beforeIsNotExecutedWithoutListener(){
         Assert.assertEquals(beforeMethodInGroupInvokedCount, 0);
-        Assert.assertEquals(afterMethodInGroupInvokedCount, 0);
     }
 
-    @Test(groups = "target", dependsOnMethods = "startingTest")
-    public void actualTest(){
-        Assert.assertEquals(beforeMethodInGroupInvokedCount, 0);
-        Assert.assertEquals(afterMethodInGroupInvokedCount, 0);
-    }
-
-    @Test(dependsOnMethods = "actualTest")
-    public void closingTest(){
-        Assert.assertEquals(beforeMethodInGroupInvokedCount, 0);
+    @Test(dependsOnMethods = "beforeIsNotExecutedWithoutListener")
+    public void afterIsNotExecutedWithoutListener(){
         Assert.assertEquals(afterMethodInGroupInvokedCount, 0);
     }
 }

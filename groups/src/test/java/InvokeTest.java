@@ -18,26 +18,20 @@ public class InvokeTest {
         afterMethodInGroupInvokedCount += 1;
     }
 
-    @Test
-    public void startingTest(){
-        Assert.assertEquals(beforeMethodInGroupInvokedCount, 0);
-        Assert.assertEquals(afterMethodInGroupInvokedCount, 0);
-    }
-
-    @Test(groups = "target", dependsOnMethods = "startingTest")
-    public void actualTest1(){
+    @Test(groups = "target")
+    public void beforeIsInvokedBeforeTest1(){
         Assert.assertEquals(beforeMethodInGroupInvokedCount, 1);
         Assert.assertEquals(afterMethodInGroupInvokedCount, 0);
     }
 
-    @Test(groups = "target", dependsOnMethods = "actualTest1")
-    public void actualTest2(){
+    @Test(groups = "target", dependsOnMethods = "beforeIsInvokedBeforeTest1")
+    public void beforeIsInvokedBeforeTest2(){
         Assert.assertEquals(beforeMethodInGroupInvokedCount, 2);
         Assert.assertEquals(afterMethodInGroupInvokedCount, 1);
     }
 
-    @Test(dependsOnMethods = "actualTest2")
-    public void closingTest(){
+    @Test(dependsOnMethods = "beforeIsInvokedBeforeTest2")
+    public void afterIsInvokedAfterEachTest(){
         Assert.assertEquals(beforeMethodInGroupInvokedCount, 2);
         Assert.assertEquals(afterMethodInGroupInvokedCount, 2);
     }

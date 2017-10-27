@@ -18,21 +18,13 @@ public class DoNotInvokeTest {
         afterMethodInGroupInvokedCount += 1;
     }
 
-    @Test
-    public void startingTest(){
+    @Test(groups = "notTarget")
+    public void beforeIsNotInvokedWithoutGroup(){
         Assert.assertEquals(beforeMethodInGroupInvokedCount, 0);
-        Assert.assertEquals(afterMethodInGroupInvokedCount, 0);
     }
 
-    @Test(groups = "notTarget", dependsOnMethods = "startingTest")
-    public void actualTest(){
-        Assert.assertEquals(beforeMethodInGroupInvokedCount, 0);
-        Assert.assertEquals(afterMethodInGroupInvokedCount, 0);
-    }
-
-    @Test(dependsOnMethods = "actualTest")
-    public void closingTest(){
-        Assert.assertEquals(beforeMethodInGroupInvokedCount, 0);
+    @Test(dependsOnMethods = "beforeIsNotInvokedWithoutGroup")
+    public void afterIsNotInvokedWithoutGroup(){
         Assert.assertEquals(afterMethodInGroupInvokedCount, 0);
     }
 
