@@ -8,39 +8,32 @@ public class OrderTest {
     private String beforeMethodInGroupInvokedCount = "";
     private String afterMethodInGroupInvokedCount = "";
 
-    @BeforeMethodInGroup("target")
+    @BeforeMethodInGroup(value = "target", priority = 1)
     public void before1(){ beforeMethodInGroupInvokedCount += "before1 "; }
 
-    @BeforeMethodInGroup("target")
+    @BeforeMethodInGroup(value = "target", priority = 2)
     public void before2(){
         beforeMethodInGroupInvokedCount += "before2 ";
     }
 
-    @AfterMethodInGroup("target")
+    @AfterMethodInGroup(value = "target", priority = 0)
     public void after1(){
         afterMethodInGroupInvokedCount += "after1 ";
     }
 
-    @AfterMethodInGroup("target")
+    @AfterMethodInGroup(value = "target", priority = 3)
     public void after2(){
         afterMethodInGroupInvokedCount += "after2 ";
     }
 
-    @Test
-    public void startingTest(){
-        Assert.assertEquals(beforeMethodInGroupInvokedCount, "");
-        Assert.assertEquals(afterMethodInGroupInvokedCount, "");
-    }
-
-    @Test(groups = "target", dependsOnMethods = "startingTest")
-    public void actualTest(){
+    @Test(groups = "target")
+    public void beforesExecuteInPriorityOrder(){
         Assert.assertEquals(beforeMethodInGroupInvokedCount, "before1 before2 ");
         Assert.assertEquals(afterMethodInGroupInvokedCount, "");
     }
 
-    @Test(dependsOnMethods = "actualTest")
-    public void closingTest(){
-        Assert.assertEquals(beforeMethodInGroupInvokedCount, "before1 before2 ");
+    @Test(dependsOnMethods = "beforesExecuteInPriorityOrder")
+    public void aftersExecuteInPriorityOrder(){
         Assert.assertEquals(afterMethodInGroupInvokedCount, "after1 after2 ");
     }
 }
