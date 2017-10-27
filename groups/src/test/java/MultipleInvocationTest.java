@@ -8,12 +8,12 @@ public class MultipleInvocationTest {
     private int beforeMethodInGroupInvokedCount = 0;
     private int afterMethodInGroupInvokedCount = 0;
 
-    @BeforeMethodInGroup("target")
+    @BeforeMethodInGroup(groups = "target")
     private void before(){
         beforeMethodInGroupInvokedCount += 1;
     }
 
-    @AfterMethodInGroup("target")
+    @AfterMethodInGroup(groups = "target")
     private void after(){
         afterMethodInGroupInvokedCount += 1;
     }

@@ -8,22 +8,22 @@ public class MultipleMethodsTest {
     private int beforeMethodInGroupInvokedCount = 0;
     private int afterMethodInGroupInvokedCount = 0;
 
-    @BeforeMethodInGroup("target")
+    @BeforeMethodInGroup(groups = "target")
     public void before1(){
         beforeMethodInGroupInvokedCount += 1;
     }
 
-    @BeforeMethodInGroup("target")
+    @BeforeMethodInGroup(groups = "target")
     public void before2(){
         beforeMethodInGroupInvokedCount += 1;
     }
 
-    @AfterMethodInGroup("target")
+    @AfterMethodInGroup(groups = "target")
     public void after1(){
         afterMethodInGroupInvokedCount += 1;
     }
 
-    @AfterMethodInGroup("target")
+    @AfterMethodInGroup(groups = "target")
     public void after2(){
         afterMethodInGroupInvokedCount += 1;
     }

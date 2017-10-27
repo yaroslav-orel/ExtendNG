@@ -11,8 +11,9 @@ allprojects{
     }
 
     dependencies {
-        compile group: 'org.testng', name: 'testng', version: '6.11'
-        compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.6'
+        compile 'org.testng:testng:6.11'
+        compile 'com.google.guava:guava:23.3-jre'
+
     }
     test{
         useTestNG()

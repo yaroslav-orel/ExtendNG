@@ -5,12 +5,12 @@ public class ListenerAbsentTest {
     private int beforeMethodInGroupInvokedCount = 0;
     private int afterMethodInGroupInvokedCount = 0;
 
-    @BeforeMethodInGroup("target")
+    @BeforeMethodInGroup(groups = "target")
     public void before(){
         beforeMethodInGroupInvokedCount += 1;
     }
 
-    @AfterMethodInGroup("target")
+    @AfterMethodInGroup(groups = "target")
     public void after(){
         afterMethodInGroupInvokedCount += 1;
     }

@@ -8,20 +8,20 @@ public class OrderTest {
     private String beforeMethodInGroupInvokedCount = "";
     private String afterMethodInGroupInvokedCount = "";
 
-    @BeforeMethodInGroup(value = "target", priority = 1)
+    @BeforeMethodInGroup(groups = "target", priority = 1)
     public void before1(){ beforeMethodInGroupInvokedCount += "before1 "; }
 
-    @BeforeMethodInGroup(value = "target", priority = 2)
+    @BeforeMethodInGroup(groups = "target", priority = 2)
     public void before2(){
         beforeMethodInGroupInvokedCount += "before2 ";
     }
 
-    @AfterMethodInGroup(value = "target", priority = 0)
+    @AfterMethodInGroup(groups = "target", priority = 0)
     public void after1(){
         afterMethodInGroupInvokedCount += "after1 ";
     }
 
-    @AfterMethodInGroup(value = "target", priority = 3)
+    @AfterMethodInGroup(groups = "target", priority = 3)
     public void after2(){
         afterMethodInGroupInvokedCount += "after2 ";
     }

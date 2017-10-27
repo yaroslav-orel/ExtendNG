@@ -2,37 +2,40 @@ import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-@Listeners({MethodInGroupListener.class})
-public class InvokeTest {
+@Listeners(MethodInGroupListener.class)
+public class MultipleGroupsTest {
 
     private int beforeMethodInGroupInvokedCount = 0;
     private int afterMethodInGroupInvokedCount = 0;
 
-    @BeforeMethodInGroup(groups = "target")
+    @BeforeMethodInGroup(groups = {"one", "two", "three"})
     private void before(){
         beforeMethodInGroupInvokedCount += 1;
     }
 
-    @AfterMethodInGroup(groups = "target")
+    @AfterMethodInGroup(groups = {"one", "two", "three"})
     private void after(){
         afterMethodInGroupInvokedCount += 1;
     }
 
-    @Test(groups = "target")
-    public void beforeIsInvokedBeforeTest1(){
+    @Test(groups = "one")
+    public void multipleGroupsOneMatch(){
         Assert.assertEquals(beforeMethodInGroupInvokedCount, 1);
-        Assert.assertEquals(afterMethodInGroupInvokedCount, 0);
     }
 
-    @Test(groups = "target", dependsOnMethods = "beforeIsInvokedBeforeTest1")
-    public void beforeIsInvokedBeforeTest2(){
+    @Test(groups = {"two","four"}, dependsOnMethods = "multipleGroupsOneMatch")
+    public void multipleGroupsOneMatchOneMiss(){
         Assert.assertEquals(beforeMethodInGroupInvokedCount, 2);
         Assert.assertEquals(afterMethodInGroupInvokedCount, 1);
     }
 
-    @Test(dependsOnMethods = "beforeIsInvokedBeforeTest2")
-    public void afterIsInvokedAfterEachTest(){
+    @Test(groups = {"five", "six", "seven"}, dependsOnMethods = "multipleGroupsOneMatchOneMiss")
+    public void multipleGroupsNoMatch(){
         Assert.assertEquals(beforeMethodInGroupInvokedCount, 2);
+    }
+
+    @Test(dependsOnMethods = "multipleGroupsNoMatch")
+    public void multipleGroupsAfterNoMatch(){
         Assert.assertEquals(afterMethodInGroupInvokedCount, 2);
     }
 }

@@ -6,12 +6,12 @@ public class BaseTest {
     protected int beforeMethodInGroupInvokedCount = 0;
     protected int afterMethodInGroupInvokedCount = 0;
 
-    @BeforeMethodInGroup("methodInBase")
+    @BeforeMethodInGroup(groups = "methodInBase")
     public void baseBefore(){
         beforeMethodInGroupInvokedCount += 1;
     }
 
-    @AfterMethodInGroup("methodInBase")
+    @AfterMethodInGroup(groups = "methodInBase")
     public void baseAfter(){
         afterMethodInGroupInvokedCount += 1;
     }
