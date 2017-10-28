@@ -22,7 +22,7 @@ public class MethodInGroupListener implements IInvokedMethodListener {
         if(iInvokedMethod.isTestMethod() && shouldBeInvoked(iInvokedMethod.getTestMethod().getRealClass())){
             Stream.of(getAllMethods(iInvokedMethod.getTestMethod().getRealClass(), new Method[]{}))
                     .filter(method -> method.isAnnotationPresent(BeforeMethodInGroup.class))
-                    .filter(method -> intersection(
+                    .filter(method -> !intersection(
                             newHashSet(iInvokedMethod.getTestMethod().getGroups()),
                             newHashSet(method.getAnnotation(BeforeMethodInGroup.class).groups())
                     ).isEmpty())
@@ -39,7 +39,7 @@ public class MethodInGroupListener implements IInvokedMethodListener {
         if(iInvokedMethod.isTestMethod() && shouldBeInvoked(iInvokedMethod.getTestMethod().getRealClass())){
             Stream.of(getAllMethods(iInvokedMethod.getTestMethod().getRealClass(), new Method[]{}))
                     .filter(method -> method.isAnnotationPresent(AfterMethodInGroup.class))
-                    .filter(method -> intersection(
+                    .filter(method -> !intersection(
                             newHashSet(iInvokedMethod.getTestMethod().getGroups()),
                             newHashSet(method.getAnnotation(AfterMethodInGroup.class).groups())
                     ).isEmpty())
