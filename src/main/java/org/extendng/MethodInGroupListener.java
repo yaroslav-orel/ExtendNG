@@ -1,3 +1,5 @@
+package org.extendng;
+
 import org.testng.IInvokedMethod;
 import org.testng.IInvokedMethodListener;
 import org.testng.ITestResult;
@@ -5,7 +7,6 @@ import org.testng.annotations.Listeners;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.stream.Stream;
 
@@ -24,7 +25,7 @@ public class MethodInGroupListener implements IInvokedMethodListener {
                     .filter(method -> intersection(
                             newHashSet(iInvokedMethod.getTestMethod().getGroups()),
                             newHashSet(method.getAnnotation(BeforeMethodInGroup.class).groups())
-                    ).size() > 0)
+                    ).isEmpty())
                     .sorted(Comparator.comparingInt(method -> method.getAnnotation(BeforeMethodInGroup.class).priority()))
                     .forEach(method -> {
                         method.setAccessible(true);
@@ -41,7 +42,7 @@ public class MethodInGroupListener implements IInvokedMethodListener {
                     .filter(method -> intersection(
                             newHashSet(iInvokedMethod.getTestMethod().getGroups()),
                             newHashSet(method.getAnnotation(AfterMethodInGroup.class).groups())
-                    ).size() > 0)
+                    ).isEmpty())
                     .sorted(Comparator.comparingInt(method -> method.getAnnotation(AfterMethodInGroup.class).priority()))
                     .forEach(method -> {
                         method.setAccessible(true);
