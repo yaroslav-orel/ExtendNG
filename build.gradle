@@ -1,23 +1,26 @@
+plugins {
+    id "org.sonarqube" version "2.5"
+}
+
+
 group 'org.yorel.auto'
 version '1.0-SNAPSHOT'
 
-allprojects{
-    apply plugin: 'java'
+apply plugin: 'java'
 
-    sourceCompatibility = 1.8
+sourceCompatibility = 1.8
 
-    repositories {
-        mavenCentral()
-    }
+repositories {
+    mavenCentral()
+}
 
-    dependencies {
-        compile 'org.testng:testng:6.11'
-        compile 'com.google.guava:guava:23.3-jre'
+dependencies {
+    compile 'org.testng:testng:6.11'
+    compile 'com.google.guava:guava:23.3-jre'
 
-    }
-    test{
-        useTestNG()
-    }
+}
+test{
+    useTestNG()
 }
 
 task wrapper(type: Wrapper) {
