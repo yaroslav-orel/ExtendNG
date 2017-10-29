@@ -12,12 +12,12 @@ public class InvokeTest {
     private int afterMethodInGroupInvokedCount = 0;
 
     @BeforeMethodInGroup(groups = "target")
-    private void before(){
+    public void before(){
         beforeMethodInGroupInvokedCount += 1;
     }
 
     @AfterMethodInGroup(groups = "target")
-    private void after(){
+    public void after(){
         afterMethodInGroupInvokedCount += 1;
     }
 

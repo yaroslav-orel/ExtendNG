@@ -22,10 +22,7 @@ public class MethodInGroupListener implements IInvokedMethodListener {
         if(iInvokedMethod.isTestMethod() && shouldBeInvoked(iInvokedMethod.getTestMethod().getRealClass())){
             Stream.of(getAllMethods(iInvokedMethod.getTestMethod().getRealClass(), new Method[]{}))
                     .filter(method -> method.isAnnotationPresent(BeforeMethodInGroup.class))
-                    .filter(method -> !intersection(
-                            newHashSet(iInvokedMethod.getTestMethod().getGroups()),
-                            newHashSet(method.getAnnotation(BeforeMethodInGroup.class).groups())
-                    ).isEmpty())
+                    .filter(method -> intersects(iInvokedMethod.getTestMethod().getGroups(), method.getAnnotation(BeforeMethodInGroup.class).groups()))
                     .sorted(Comparator.comparingInt(method -> method.getAnnotation(BeforeMethodInGroup.class).priority()))
                     .forEach(method -> {
                         method.setAccessible(true);
@@ -39,10 +36,7 @@ public class MethodInGroupListener implements IInvokedMethodListener {
         if(iInvokedMethod.isTestMethod() && shouldBeInvoked(iInvokedMethod.getTestMethod().getRealClass())){
             Stream.of(getAllMethods(iInvokedMethod.getTestMethod().getRealClass(), new Method[]{}))
                     .filter(method -> method.isAnnotationPresent(AfterMethodInGroup.class))
-                    .filter(method -> !intersection(
-                            newHashSet(iInvokedMethod.getTestMethod().getGroups()),
-                            newHashSet(method.getAnnotation(AfterMethodInGroup.class).groups())
-                    ).isEmpty())
+                    .filter(method -> intersects(iInvokedMethod.getTestMethod().getGroups(), method.getAnnotation(AfterMethodInGroup.class).groups()))
                     .sorted(Comparator.comparingInt(method -> method.getAnnotation(AfterMethodInGroup.class).priority()))
                     .forEach(method -> {
                         method.setAccessible(true);
@@ -59,6 +53,10 @@ public class MethodInGroupListener implements IInvokedMethodListener {
             return true;
 
         return shouldBeInvoked(testClass.getSuperclass());
+    }
+
+    private boolean intersects(String[] testmethodGroups, String[] methodInGropGroups) {
+        return !intersection(newHashSet(testmethodGroups), newHashSet(methodInGropGroups)).isEmpty();
     }
 
     private Method[] getAllMethods(Class testClass, Method[] methods){
