@@ -9,25 +9,23 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static org.extendng.ReflectionUtils.shouldBeInvoked;
+
 public class FastFailListener implements IInvokedMethodListener {
 
     private List<Object> failedClasses = Collections.synchronizedList(new ArrayList<>());
 
     @Override
     public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {
-        if(ReflectionUtils.shouldBeInvoked(testResult.getInstance().getClass(), FastFailListener.class)){
-            if(failedClasses.contains(testResult.getInstance())){
+        if(shouldBeInvoked(testResult.getInstance().getClass(), FastFailListener.class) &&
+           failedClasses.contains(testResult.getInstance()))
                 throw new SkipException("One of the previous methods failed");
-            }
-        }
-
     }
 
     @Override
     public void afterInvocation(IInvokedMethod method, ITestResult testResult) {
-        if(ReflectionUtils.shouldBeInvoked(testResult.getInstance().getClass(), FastFailListener.class)){
-            if(testResult.getThrowable() != null)
+        if(shouldBeInvoked(testResult.getInstance().getClass(), FastFailListener.class) &&
+           testResult.getThrowable() != null)
                 failedClasses.add(testResult.getInstance());
-        }
     }
 }

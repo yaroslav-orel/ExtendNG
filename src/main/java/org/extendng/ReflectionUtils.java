@@ -7,6 +7,8 @@ import static java.util.Arrays.asList;
 
 public class ReflectionUtils {
 
+    private ReflectionUtils(){}
+
     @SuppressWarnings("unchecked")
     static boolean shouldBeInvoked(Class testClass, Class<? extends ITestNGListener> listener){
         if(!testClass.isAnnotationPresent(Listeners.class))
