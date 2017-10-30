@@ -1,3 +1,5 @@
+package methodingroups;
+
 import org.extendng.AfterMethodInGroup;
 import org.extendng.BeforeMethodInGroup;
 import org.extendng.MethodInGroupListener;
