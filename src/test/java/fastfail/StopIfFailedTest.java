@@ -10,12 +10,12 @@ import org.testng.annotations.Test;
 public class StopIfFailedTest {
 
     @Test(expectedExceptions = AssertionError.class, priority = 0)
-    public void throwsExcpetion(){
+    public void throwsException(){
         Assert.fail();
     }
 
     @Test(expectedExceptions = SkipException.class, priority = 1)
-    public void DoesNotRunAfterExcpetion1(){ }
+    public void DoesNotRunAfterException1(){ }
 
     @Test(expectedExceptions = SkipException.class, priority = 2)
     public void doesNotRunAfterException2(){}
