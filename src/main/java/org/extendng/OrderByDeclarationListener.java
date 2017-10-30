@@ -4,42 +4,44 @@ import kiss.util.Reflect;
 import org.testng.IMethodInstance;
 import org.testng.IMethodInterceptor;
 import org.testng.ITestContext;
-import org.testng.annotations.Test;
 
 import java.lang.reflect.Method;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
+import static org.extendng.ReflectionUtils.shouldBeInvoked;
 
 public class OrderByDeclarationListener implements IMethodInterceptor {
     @Override
     public List<IMethodInstance> intercept(List<IMethodInstance> methods, ITestContext context) {
-        Map<Object, List<IMethodInstance>> groups =  methods.stream().collect(Collectors.groupingBy(IMethodInstance::getInstance));
+        return methods.stream()
+                .collect(groupingBy(IMethodInstance::getInstance))
+                .entrySet().stream()
+                    .flatMap(e ->
+                        shouldBeInvoked(e.getKey().getClass(), OrderByDeclarationListener.class) ?
+                                e.getValue().stream().sorted(byDeclaration()) :
+                                e.getValue().stream())
+                .collect(toList());
+    }
 
-        Map<Object, List<Method>> classesWithMethodsInOrder = groups.entrySet().stream()
-                .filter(map -> ReflectionUtils.shouldBeInvoked(map.getKey().getClass(), OrderByDeclarationListener.class))
-                .collect(toMap(Map.Entry::getKey, e -> Stream.of(Reflect.getDeclaredMethodsInOrder(e.getKey().getClass()))
-                        .filter(method -> method.isAnnotationPresent(Test.class))
-                        .collect(toList()))
+    public Comparator<IMethodInstance> byDeclaration(){
+        return new Comparator<IMethodInstance>() {
+
+            List<Method> classMethodsInOrder = null;
+
+            @Override
+            public int compare(IMethodInstance o1, IMethodInstance o2) {
+               if(classMethodsInOrder == null){
+                   classMethodsInOrder = Stream.of(Reflect.getDeclaredMethodsInOrder(o1.getInstance().getClass())).collect(toList());
+               }
+                return Integer.compare(
+                        classMethodsInOrder.indexOf(o1.getMethod().getConstructorOrMethod().getMethod()),
+                        classMethodsInOrder.indexOf((o2.getMethod().getConstructorOrMethod().getMethod()))
                 );
-
-        Map<Object, List<IMethodInstance>> filteredTests = classesWithMethodsInOrder.entrySet().stream()
-                .collect(toMap(
-                        Map.Entry::getKey,
-                        e -> e.getValue().stream()
-                                .map(method -> groups.get(e.getKey()).stream()
-                                        .filter(test -> test.getMethod().getConstructorOrMethod().getMethod().equals(method))
-                                        .findFirst().get())
-                                .collect(toList())
-                        )
-                );
-
-        groups.putAll(filteredTests);
-
-        return groups.entrySet().stream().flatMap(e-> e.getValue().stream()).collect(toList());
+            }
+        };
     }
 }
