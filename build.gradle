@@ -11,12 +11,13 @@ apply plugin: 'java'
 sourceCompatibility = 1.8
 
 repositories {
-    mavenCentral()
+    jcenter()
 }
 
 dependencies {
     compile 'org.testng:testng:6.11'
     compile 'com.google.guava:guava:23.3-jre'
+    compile 'com.github.wmacevoy:kiss:1.0'
 
 }
 test{
