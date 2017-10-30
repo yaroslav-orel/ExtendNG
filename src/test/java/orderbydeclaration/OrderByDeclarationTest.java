@@ -1,14 +1,13 @@
-package flow;
+package orderbydeclaration;
 
-import org.extendng.FlowListener;
+import org.extendng.OrderByDeclarationListener;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 
-@Listeners(FlowListener.class)
-public class SmokeTest {
+@Listeners(OrderByDeclarationListener.class)
+public class OrderByDeclarationTest {
 
     String orderOfExecution = "";
 

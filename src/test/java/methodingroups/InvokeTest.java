@@ -2,7 +2,6 @@ package methodingroups;
 
 import org.extendng.AfterMethodInGroup;
 import org.extendng.BeforeMethodInGroup;
-import org.extendng.FlowListener;
 import org.extendng.MethodInGroupListener;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
