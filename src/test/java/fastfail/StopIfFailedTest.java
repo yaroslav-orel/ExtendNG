@@ -14,9 +14,9 @@ public class StopIfFailedTest {
         Assert.fail();
     }
 
-    @Test(expectedExceptions = SkipException.class, priority = 1)
+    @Test(expectedExceptions = SkipException.class, expectedExceptionsMessageRegExp = ".* 'throwsException'", priority = 1)
     public void DoesNotRunAfterException1(){ }
 
-    @Test(expectedExceptions = SkipException.class, priority = 2)
+    @Test(expectedExceptions = SkipException.class, expectedExceptionsMessageRegExp = ".* .* 'throwsException'", priority = 2)
     public void doesNotRunAfterException2(){}
 }

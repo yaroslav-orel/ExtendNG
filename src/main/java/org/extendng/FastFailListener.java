@@ -5,27 +5,28 @@ import org.testng.IInvokedMethodListener;
 import org.testng.ITestResult;
 import org.testng.SkipException;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.extendng.ReflectionUtils.shouldBeInvoked;
 
 public class FastFailListener implements IInvokedMethodListener {
 
-    private List<Object> failedClasses = Collections.synchronizedList(new ArrayList<>());
+    private Map<Object, IInvokedMethod> failedClasses = Collections.synchronizedMap(new HashMap<>());
 
     @Override
     public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {
         if(shouldBeInvoked(testResult.getInstance().getClass(), FastFailListener.class) &&
-           failedClasses.contains(testResult.getInstance()))
-                throw new SkipException("One of the previous methods failed");
+           failedClasses.containsKey(testResult.getInstance()))
+                throw new SkipException(String.format("Skipepd because of the failed test '%s'",
+                        failedClasses.get(testResult.getInstance()).getTestMethod().getMethodName()));
     }
 
     @Override
     public void afterInvocation(IInvokedMethod method, ITestResult testResult) {
         if(shouldBeInvoked(testResult.getInstance().getClass(), FastFailListener.class) &&
-           testResult.getThrowable() != null)
-                failedClasses.add(testResult.getInstance());
+           testResult.getThrowable() != null && !failedClasses.containsKey(testResult.getInstance()))
+                failedClasses.put(testResult.getInstance(), method);
     }
 }
