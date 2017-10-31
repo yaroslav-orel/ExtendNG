@@ -5,12 +5,9 @@ addons:
   sonarcloud:
     organization: "yaroslav-orel-github"
     token:
-      secure: "FjyD/+EHEPHHTmlsWoq/YBeNJh+7i0KLpQrbFH7miNibKJy28gUWDzadqxzCEwG3kb9rObMQAN+PazttVLeQbuTwsP+01knf0OBrdOjqnuyIz
-               5vg1jiQv8FO34jnMJmihmbLwYBuk+Gr0rg91g8LqnNp3FMryMg5DZOKMHLP/undS3KinZmEsa1qz6TWn0bF8F3HJU5ROEPNoPusyf1e3wuWc04zLUhEhj8Ra
-               bRnDjtDWH9MwKziD7VcbLySRGc72XAb9V3K5iySRkRE0cHUHniKSgeiDkI9LBvnDMF8W7Ej0mWwgeYQxnUx5G2Ob+M2QkU44OrNkPH+1XlAJzxcZ4y57MmuM
-               wIa6HW/DVWGBo/DBH0li1yNPjQPpSRgqjsxuPQuiT9QY4JjXtFzx2gOU96Yeuclc1mtCq7a0GsD3q9j8UlO0QL8FC/riw1xMme12pUkxId8scvZQTGlCJgBt
-               8Z3B9tfTnu6DQa6f5jAieaZOGjKuL6Ri/ntrEiriis/vFILEsy6Mi4rwf29RNJT0MpndZ7KEBWFQzgyuDJpUETeUtsqJZbBiBwMg7YUXKw/IDWY8swCt5FpN
-               +GKRNr4qJV4rghomrQPG3H34onamW7bTpuUvB675A9x066QuBrSjIliZMpnQB0jaWpuGNY+fu0dNgAKwWfalFqr5fRnaFk="
+      secure: "gq+VY0xvK58q0AovMbUkE4dmirxQvon3WHoYjBCwzTN8vE1Qb+P28WDwtalubLCM2mEQHESQZrdAxAOyOxkR2c2zqoTakinVoWys4IueXOAoxxLlK5WcOfV511ZPcMdJ3REpqz/AmUY4bxtc/4U8NutaO9qObK4nuNAr3MoQQNYHPNrna57NVrDBgrI84sLK/L3BUmbMU9LzdMG0/wxYCvRBN6cgdOrSSlZxUsFCzL8QVpfZ62q2wEhGSwVsix/iJyiT6rY2iwzJ+u6amMoMUH/M20TzKgop7
+               LbNh4q8/jo+xBPK1T9zKql9UH0KlchZNYx1PGmqfhdSBPxR20Tl/YMeSorqZRZf5Vhf8uSkAfqBUdr94vBBH3S7E1RA+xTVByykALwpMLwIfMCMS7+BLCwMvzYMJGaEhDn1LdoBRA+yxxLcHwuCiTD9VJtxIDH5QIamzbMB6/874nVGySNQJNf5HNo8LA4EpIn9SsSVX4rTKQJvKRLiQP3PLga6bUi7lQ0hVuWFFkku1DHUGzJ9mV8L/8uSGUciPP5y2/KT19IE22Q/c6y+qbICQnop3A0Alt2KMQaFgoJIN
+               IHKhXyDg0GOROgoNEvKYBcZzGLe1hg2/4osh0amUcNsNSr/f6VdFZinpjaT3Ap/v0LrdFrRKIH0mG3OnEbngkcu4iW+SDc="
 jdk:
   - oraclejdk8
 
