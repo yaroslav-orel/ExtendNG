@@ -1,24 +1,24 @@
 package methodingroups;
 
-import org.extendng.AfterMethodInGroup;
-import org.extendng.BeforeMethodInGroup;
-import org.extendng.MethodInGroupListener;
+import org.extendng.AfterMethodInGroups;
+import org.extendng.BeforeMethodInGroups;
+import org.extendng.MethodInGroupsListener;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-@Listeners(MethodInGroupListener.class)
+@Listeners(MethodInGroupsListener.class)
 public class MultipleGroupsTest {
 
     private int beforeMethodInGroupInvokedCount = 0;
     private int afterMethodInGroupInvokedCount = 0;
 
-    @BeforeMethodInGroup(groups = {"one", "two", "three"})
+    @BeforeMethodInGroups(groups = {"one", "two", "three"})
     private void before(){
         beforeMethodInGroupInvokedCount += 1;
     }
 
-    @AfterMethodInGroup(groups = {"one", "two", "three"})
+    @AfterMethodInGroups(groups = {"one", "two", "three"})
     private void after(){
         afterMethodInGroupInvokedCount += 1;
     }

@@ -1,7 +1,7 @@
 package methodingroups;
 
-import org.extendng.AfterMethodInGroup;
-import org.extendng.BeforeMethodInGroup;
+import org.extendng.AfterMethodInGroups;
+import org.extendng.BeforeMethodInGroups;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -9,12 +9,12 @@ public class ListenerAbsentTest {
     private int beforeMethodInGroupInvokedCount = 0;
     private int afterMethodInGroupInvokedCount = 0;
 
-    @BeforeMethodInGroup(groups = "target")
+    @BeforeMethodInGroups(groups = "target")
     public void before(){
         beforeMethodInGroupInvokedCount += 1;
     }
 
-    @AfterMethodInGroup(groups = "target")
+    @AfterMethodInGroups(groups = "target")
     public void after(){
         afterMethodInGroupInvokedCount += 1;
     }

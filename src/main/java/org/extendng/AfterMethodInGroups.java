@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD})
-public @interface BeforeMethodInGroup {
+public @interface AfterMethodInGroups {
     String[] groups();
     int priority() default 0;
 }

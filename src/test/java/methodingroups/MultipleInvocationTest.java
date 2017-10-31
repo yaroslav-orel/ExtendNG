@@ -1,24 +1,24 @@
 package methodingroups;
 
-import org.extendng.AfterMethodInGroup;
-import org.extendng.BeforeMethodInGroup;
-import org.extendng.MethodInGroupListener;
+import org.extendng.AfterMethodInGroups;
+import org.extendng.BeforeMethodInGroups;
+import org.extendng.MethodInGroupsListener;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-@Listeners(MethodInGroupListener.class)
+@Listeners(MethodInGroupsListener.class)
 public class MultipleInvocationTest {
 
     private int beforeMethodInGroupInvokedCount = 0;
     private int afterMethodInGroupInvokedCount = 0;
 
-    @BeforeMethodInGroup(groups = "target")
+    @BeforeMethodInGroups(groups = "target")
     private void before(){
         beforeMethodInGroupInvokedCount += 1;
     }
 
-    @AfterMethodInGroup(groups = "target")
+    @AfterMethodInGroups(groups = "target")
     private void after(){
         afterMethodInGroupInvokedCount += 1;
     }

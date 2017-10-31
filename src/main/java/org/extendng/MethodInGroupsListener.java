@@ -13,15 +13,15 @@ import static com.google.common.collect.ObjectArrays.concat;
 import static com.google.common.collect.Sets.intersection;
 import static com.google.common.collect.Sets.newHashSet;
 
-public class MethodInGroupListener implements IInvokedMethodListener {
+public class MethodInGroupsListener implements IInvokedMethodListener {
 
     @Override
     public void beforeInvocation(IInvokedMethod iInvokedMethod, ITestResult iTestResult) {
-        if(iInvokedMethod.isTestMethod() && ReflectionUtils.shouldBeInvoked(iInvokedMethod.getTestMethod().getRealClass(), MethodInGroupListener.class)){
+        if(iInvokedMethod.isTestMethod() && ReflectionUtils.shouldBeInvoked(iInvokedMethod.getTestMethod().getRealClass(), MethodInGroupsListener.class)){
             Stream.of(getAllMethods(iInvokedMethod.getTestMethod().getRealClass(), new Method[]{}))
-                    .filter(method -> method.isAnnotationPresent(BeforeMethodInGroup.class))
-                    .filter(method -> intersects(iInvokedMethod.getTestMethod().getGroups(), method.getAnnotation(BeforeMethodInGroup.class).groups()))
-                    .sorted(Comparator.comparingInt(method -> method.getAnnotation(BeforeMethodInGroup.class).priority()))
+                    .filter(method -> method.isAnnotationPresent(BeforeMethodInGroups.class))
+                    .filter(method -> intersects(iInvokedMethod.getTestMethod().getGroups(), method.getAnnotation(BeforeMethodInGroups.class).groups()))
+                    .sorted(Comparator.comparingInt(method -> method.getAnnotation(BeforeMethodInGroups.class).priority()))
                     .forEach(method -> {
                         method.setAccessible(true);
                         invokeMethod(method, iTestResult);
@@ -31,11 +31,11 @@ public class MethodInGroupListener implements IInvokedMethodListener {
 
     @Override
     public void afterInvocation(IInvokedMethod iInvokedMethod, ITestResult iTestResult) {
-        if(iInvokedMethod.isTestMethod() && ReflectionUtils.shouldBeInvoked(iInvokedMethod.getTestMethod().getRealClass(), MethodInGroupListener.class)){
+        if(iInvokedMethod.isTestMethod() && ReflectionUtils.shouldBeInvoked(iInvokedMethod.getTestMethod().getRealClass(), MethodInGroupsListener.class)){
             Stream.of(getAllMethods(iInvokedMethod.getTestMethod().getRealClass(), new Method[]{}))
-                    .filter(method -> method.isAnnotationPresent(AfterMethodInGroup.class))
-                    .filter(method -> intersects(iInvokedMethod.getTestMethod().getGroups(), method.getAnnotation(AfterMethodInGroup.class).groups()))
-                    .sorted(Comparator.comparingInt(method -> method.getAnnotation(AfterMethodInGroup.class).priority()))
+                    .filter(method -> method.isAnnotationPresent(AfterMethodInGroups.class))
+                    .filter(method -> intersects(iInvokedMethod.getTestMethod().getGroups(), method.getAnnotation(AfterMethodInGroups.class).groups()))
+                    .sorted(Comparator.comparingInt(method -> method.getAnnotation(AfterMethodInGroups.class).priority()))
                     .forEach(method -> {
                         method.setAccessible(true);
                         invokeMethod(method, iTestResult);

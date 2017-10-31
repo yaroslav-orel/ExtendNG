@@ -1,11 +1,11 @@
 package methodingroups;
 
-import org.extendng.MethodInGroupListener;
+import org.extendng.MethodInGroupsListener;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-@Listeners(MethodInGroupListener.class)
+@Listeners(MethodInGroupsListener.class)
 public class SubclassTest extends BaseTest {
 
     @Test(groups = "methodInBase")
