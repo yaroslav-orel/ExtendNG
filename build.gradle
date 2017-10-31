@@ -3,7 +3,7 @@ plugins {
 }
 
 
-group 'org.yorel.auto'
+group 'org.extendng'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
