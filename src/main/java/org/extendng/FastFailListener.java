@@ -19,7 +19,7 @@ public class FastFailListener implements IInvokedMethodListener {
     public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {
         if(shouldBeInvoked(testResult.getInstance().getClass(), FastFailListener.class) &&
            failedClasses.containsKey(testResult.getInstance()))
-                throw new SkipException(String.format("Skipepd because of the failed test '%s'",
+                throw new SkipException(String.format("Skipped because of the failed test '%s'",
                         failedClasses.get(testResult.getInstance()).getTestMethod().getMethodName()));
     }
 
