@@ -6,7 +6,7 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 @Listeners(MethodInGroupsListener.class)
-public class SubclassTest extends BaseTest {
+public class SubclassTest extends BaseClass {
 
     @Test(groups = "methodInBase")
     public void superclassBeforesArePickedUp(){

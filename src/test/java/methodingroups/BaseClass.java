@@ -6,7 +6,7 @@ import org.extendng.MethodInGroupsListener;
 import org.testng.annotations.Listeners;
 
 @Listeners(MethodInGroupsListener.class)
-public class BaseTest {
+public class BaseClass {
 
     protected int beforeMethodInGroupInvokedCount = 0;
     protected int afterMethodInGroupInvokedCount = 0;
