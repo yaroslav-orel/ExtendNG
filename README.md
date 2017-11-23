@@ -4,9 +4,9 @@ Library which provides set of convenient listeners to reduce boilerplate TestNG 
 
 # Listeners
 1. ```MethodInGroupsListener``` - allows to declare methods with ```@BeforeMethodInGroups``` and ```@AfterMethodInGroups``` which are launched before/after each test in a specific group
-2. ```OrderByDeclarationListener``` - executes tests in a class in order of their declaration (no more ```dependsOnMethods``` and ```alwaysRun=true```)
-3. ```FastFailListener``` - if one test in class fails, all subsequent tests are skipped. Makes sense in classes with ```OrderByDeclarationListener```
-4. ```OrderByGroupsListener``` - order test execution based on their groups (tests from one group are grouped together)
+2. ```OrderByGroupsListener``` - order test execution based on their groups (tests from one group are grouped together)
+3. ```OrderByDeclarationListener``` - executes tests in a class in order of their declaration (no more ```dependsOnMethods``` and ```alwaysRun=true```)
+4. ```FastFailListener``` - if one test in class fails, all subsequent tests are skipped. Makes sense in classes with ```OrderByDeclarationListener```
 
 # Examples
 ### MethodInGroupsListener
@@ -98,13 +98,13 @@ q second
 w second
 ```
 > Note: By Default groups are not sorted. 
-If you need to establish the dependency between groups you have to create method 
+If you need to establish the dependency between groups you have to create method in your test class
  which is annotated with ```@GroupOrder``` and returns ```String[]``` populated with names of groups in your custom order
  ```
 @GroupOrder
-   public String[] groupOrder(){
-        return new String[]{"first", "second", "third"};
-     }
+public String[] groupOrder(){
+    return new String[]{"first", "second", "third"};
+ }
  ```
 
 
