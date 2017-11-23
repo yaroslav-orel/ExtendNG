@@ -55,7 +55,7 @@ public class OrderByGroups implements IMethodInterceptor {
                 .filter(item -> o1.getKey().contains(item))
                 .findFirst()
                 .map(item -> asList(order).indexOf(item))
-                .get();
+                .orElse(-1);
     }
 
     private static Optional<String[]> getGroupOrder(Entry<List<String>, List<IMethodInstance>> comparisonInstance){
