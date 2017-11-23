@@ -3,17 +3,23 @@ package orderbygroups;
 import org.extendng.OrderByGroups;
 import org.testng.Assert;
 import org.testng.ITestContext;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import java.util.stream.Stream;
+
 @Listeners(OrderByGroups.class)
 public class OrderByGroupsSpecialCasesTest {
 
     @AfterClass
-    public void actualTest(ITestContext context){
-        Assert.assertEquals(context.getAllTestMethods().length, 2, "intended tests were'nt run");
+    public void actualTest(ITestContext result){
+        long testsRunInClass = Stream.of(result.getAllTestMethods())
+                .filter(iTestNGMethod -> iTestNGMethod.getTestClass().getRealClass().equals(OrderByGroupsSpecialCasesTest.class))
+                .count();
+        Assert.assertEquals(testsRunInClass, 2L, "intended tests were'nt run");
     }
 
     @Test
