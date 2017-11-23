@@ -1,14 +1,13 @@
 package orderbygroups;
 
 import org.extendng.GroupOrder;
-import org.extendng.OrderByGroups;
+import org.extendng.OrderByGroupsListener;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
 
-@Listeners(OrderByGroups.class)
+@Listeners(OrderByGroupsListener.class)
 public class OrderByGroupsSortedTest {
 
     String orderOfExecution = "";

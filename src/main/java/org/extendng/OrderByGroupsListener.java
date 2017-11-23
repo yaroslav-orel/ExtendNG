@@ -16,19 +16,19 @@ import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
 import static org.extendng.ReflectionUtils.shouldBeInvoked;
 
-public class OrderByGroups implements IMethodInterceptor {
+public class OrderByGroupsListener implements IMethodInterceptor {
 
     @Override
     public List<IMethodInstance> intercept(List<IMethodInstance> methods, ITestContext context) {
         return methods.stream()
                 .collect(groupingBy(IMethodInstance::getInstance))
                     .entrySet().stream()
-                        .flatMap(OrderByGroups::orderByGroupsIfListenerIsApplied)
+                        .flatMap(OrderByGroupsListener::orderByGroupsIfListenerIsApplied)
                             .collect(toList());
     }
 
     private static Stream<? extends IMethodInstance> orderByGroupsIfListenerIsApplied(Entry<Object, List<IMethodInstance>> entry) {
-        if (shouldBeInvoked(entry.getKey().getClass(), OrderByGroups.class)) {
+        if (shouldBeInvoked(entry.getKey().getClass(), OrderByGroupsListener.class)) {
             return orderByGroups(entry);
         }
         else return entry.getValue().stream();

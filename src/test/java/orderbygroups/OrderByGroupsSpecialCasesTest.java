@@ -1,17 +1,15 @@
 package orderbygroups;
 
-import org.extendng.OrderByGroups;
+import org.extendng.OrderByGroupsListener;
 import org.testng.Assert;
 import org.testng.ITestContext;
-import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.util.stream.Stream;
 
-@Listeners(OrderByGroups.class)
+@Listeners(OrderByGroupsListener.class)
 public class OrderByGroupsSpecialCasesTest {
 
     @AfterClass
