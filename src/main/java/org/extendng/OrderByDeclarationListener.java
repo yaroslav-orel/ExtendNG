@@ -30,7 +30,7 @@ public class OrderByDeclarationListener implements IMethodInterceptor {
     public Comparator<IMethodInstance> byDeclaration(){
         return new Comparator<IMethodInstance>() {
 
-            List<Method> classMethodsInOrder = null;
+            List<Method> classMethodsInOrder;
 
             @Override
             public int compare(IMethodInstance o1, IMethodInstance o2) {

@@ -42,8 +42,8 @@ public class MethodInGroupsListener implements IInvokedMethodListener {
         }
     }
 
-    private boolean intersects(String[] testmethodGroups, String[] methodInGropGroups) {
-        return !intersection(newHashSet(testmethodGroups), newHashSet(methodInGropGroups)).isEmpty();
+    private boolean intersects(String[] testMethodGroups, String[] methodInGropGroups) {
+        return !intersection(newHashSet(testMethodGroups), newHashSet(methodInGropGroups)).isEmpty();
     }
 
     private Method[] getAllMethods(Class testClass, Method[] methods){
