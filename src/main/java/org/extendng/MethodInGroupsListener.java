@@ -4,7 +4,6 @@ import org.testng.IInvokedMethod;
 import org.testng.IInvokedMethodListener;
 import org.testng.ITestResult;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Comparator;
 import java.util.stream.Stream;
@@ -24,7 +23,7 @@ public class MethodInGroupsListener implements IInvokedMethodListener {
                     .sorted(Comparator.comparingInt(method -> method.getAnnotation(BeforeMethodInGroups.class).priority()))
                     .forEach(method -> {
                         method.setAccessible(true);
-                        invokeMethod(method, iTestResult);
+                        ReflectionUtils.invokeMethod(method, iTestResult.getInstance());
                     });
         }
     }
@@ -38,7 +37,7 @@ public class MethodInGroupsListener implements IInvokedMethodListener {
                     .sorted(Comparator.comparingInt(method -> method.getAnnotation(AfterMethodInGroups.class).priority()))
                     .forEach(method -> {
                         method.setAccessible(true);
-                        invokeMethod(method, iTestResult);
+                        ReflectionUtils.invokeMethod(method, iTestResult.getInstance());
                     });
         }
     }
@@ -52,14 +51,6 @@ public class MethodInGroupsListener implements IInvokedMethodListener {
             return methods;
         else
             return getAllMethods(testClass.getSuperclass(), concat(methods, testClass.getDeclaredMethods(), Method.class));
-    }
-
-    private void invokeMethod(Method method, ITestResult result){
-        try {
-            method.invoke(result.getInstance());
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            throw new RuntimeException(e);
-        }
     }
 
 }

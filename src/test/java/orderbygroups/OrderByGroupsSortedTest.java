@@ -1,6 +1,5 @@
 package orderbygroups;
 
-import com.google.common.collect.Lists;
 import org.extendng.GroupOrder;
 import org.extendng.OrderByGroups;
 import org.testng.Assert;
@@ -9,22 +8,19 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import java.util.List;
-
 @Listeners(OrderByGroups.class)
-public class OrderByGroupsTest {
+public class OrderByGroupsSortedTest {
 
     String orderOfExecution = "";
 
+    @GroupOrder
+    public String[] groupOrder(){
+        return new String[]{"first", "second", "third"};
+    }
+
     @AfterClass
     public void finalAssert(){
-        SoftAssert softAssert = new SoftAssert();
-
-        softAssert.assertTrue(orderOfExecution.contains("test1 wayToName"), "group 'first' was not grouped");
-        softAssert.assertTrue(orderOfExecution.contains("originalName thisOne"), "group 'third' was not grouped");
-        softAssert.assertTrue(orderOfExecution.contains("coveredByTests treatThisRight"), "group 'second' was not grouped");
-
-        softAssert.assertAll();
+        Assert.assertEquals(orderOfExecution, "test1 wayToName coveredByTests treatThisRight originalName thisOne ");
     }
 
     @Test(groups = "first")
@@ -56,5 +52,4 @@ public class OrderByGroupsTest {
     public void originalName(){
         orderOfExecution += "originalName ";
     }
-
 }
