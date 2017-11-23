@@ -5,7 +5,6 @@ import lombok.experimental.UtilityClass;
 import org.testng.ITestNGListener;
 import org.testng.annotations.Listeners;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import static java.util.Arrays.asList;
