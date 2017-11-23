@@ -1,7 +1,6 @@
 plugins {
-    id "org.sonarqube" version "2.5"
+    id 'org.sonarqube' version '2.5'
 }
-
 
 group 'org.extendng'
 version '1.0-SNAPSHOT'
@@ -18,8 +17,9 @@ dependencies {
     compile 'org.testng:testng:6.11'
     compile 'com.google.guava:guava:23.3-jre'
     compile 'com.github.wmacevoy:kiss:1.0'
-
+    compile 'org.projectlombok:lombok:1.16.18'
 }
+
 test{
     useTestNG()
 }

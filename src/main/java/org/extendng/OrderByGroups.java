@@ -1,5 +1,6 @@
 package org.extendng;
 
+import lombok.val;
 import org.testng.IMethodInstance;
 import org.testng.IMethodInterceptor;
 import org.testng.ITestContext;
@@ -56,7 +57,7 @@ public class OrderByGroups implements IMethodInterceptor {
     }
 
     private static Optional<String[]> getGroupOrder(Entry<List<String>, List<IMethodInstance>> comparisonInstance){
-        Object testClassInstance = comparisonInstance.getValue().get(0).getInstance();
+        val testClassInstance = comparisonInstance.getValue().get(0).getInstance();
 
         return Stream.of(testClassInstance.getClass().getDeclaredMethods())
                 .filter(method -> method.isAnnotationPresent(GroupOrder.class))

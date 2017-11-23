@@ -1,5 +1,7 @@
 package org.extendng;
 
+import lombok.SneakyThrows;
+import lombok.experimental.UtilityClass;
 import org.testng.ITestNGListener;
 import org.testng.annotations.Listeners;
 
@@ -8,9 +10,8 @@ import java.lang.reflect.Method;
 
 import static java.util.Arrays.asList;
 
+@UtilityClass
 public class ReflectionUtils {
-
-    private ReflectionUtils(){}
 
     @SuppressWarnings("unchecked")
     static boolean shouldBeInvoked(Class testClass, Class<? extends ITestNGListener> listener){
@@ -22,11 +23,8 @@ public class ReflectionUtils {
         return shouldBeInvoked(testClass.getSuperclass(), listener);
     }
 
+    @SneakyThrows
     static Object invokeMethod(Method method, Object testInstance){
-        try {
-            return method.invoke(testInstance);
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            throw new RuntimeException(e);
-        }
+        return method.invoke(testInstance);
     }
 }
