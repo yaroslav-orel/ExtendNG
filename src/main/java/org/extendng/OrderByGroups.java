@@ -1,14 +1,11 @@
 package org.extendng;
 
-import com.google.common.collect.Streams;
 import org.testng.IMethodInstance;
 import org.testng.IMethodInterceptor;
 import org.testng.ITestContext;
 
-import java.lang.reflect.Method;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.stream.Stream;
