@@ -1,3 +1,6 @@
+[ ![Download](https://api.bintray.com/packages/yaroslav-orel/ExtendNG/ExtendNG/images/download.svg?version=1.0) ](https://bintray.com/yaroslav-orel/ExtendNG/ExtendNG/1.0/link)
+[![Build Status](https://travis-ci.org/yaroslav-orel/ExtendNG.svg?branch=master)](https://travis-ci.org/yaroslav-orel/ExtendNG)
+
 # ExtendNG
 
 Library which provides set of convenient listeners to reduce boilerplate TestNG code.  
