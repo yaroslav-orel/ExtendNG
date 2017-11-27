@@ -1,0 +1,36 @@
+apply plugin: 'com.jfrog.bintray'
+
+bintray {
+    user = System.getenv('BINTRAY_USER')
+    key = System.getenv('BINTRAY_API_KEY')
+
+    configurations = ['archives']
+
+    publish = true
+    pkg {
+        repo = 'ExtendNG'
+        name = 'ExtendNG'
+        desc = 'Convenient TestNG Listeners'
+        websiteUrl = 'https://github.com/yaroslav-orel/ExtendNG'
+        issueTrackerUrl = 'https://github.com/yaroslav-orel/ExtendNG/issues'
+        vcsUrl = 'https://github.com/yaroslav-orel/ExtendNG.git'
+        licenses = ['MIT']
+
+        githubRepo = 'yaroslav-orel/ExtendNG'
+        githubReleaseNotesFile = 'README.md'
+
+        version {
+            name = project.version
+            released = new Date()
+            gpg {
+                sign = true
+            }
+            mavenCentralSync {
+                sync = true
+                user = System.getenv('OSSRH_USER')
+                password = System.getenv('OSSRH_PASSWORD')
+                close = '1'
+            }
+        }
+    }
+}
