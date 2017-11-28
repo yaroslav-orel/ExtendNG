@@ -14,6 +14,22 @@ Library which provides set of convenient listeners to reduce boilerplate TestNG 
 3. ```OrderByDeclarationListener``` - executes tests in a class in order of their declaration (no more ```dependsOnMethods``` and ```alwaysRun=true```)
 4. ```FastFailListener``` - if one test in class fails, all subsequent tests are skipped. Makes sense in classes with ```OrderByDeclarationListener```
 
+# Usage
+
+### Maven
+```
+<dependency>
+	<groupId>com.github.yaroslav-orel</groupId>
+	<artifactId>ExtendNG</artifactId>
+	<version>1.0.1</version>
+</dependency>
+```
+
+### Gradle
+```
+testCompile 'com.github.yaroslav-orel:ExtendNG:1.0.1'
+```
+
 # Examples
 ### MethodInGroupsListener
 ```
