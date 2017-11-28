@@ -1,6 +1,7 @@
 # ExtendNG
 
-[ ![Download](https://api.bintray.com/packages/yaroslav-orel/ExtendNG/ExtendNG/images/download.svg?version=1.0) ](https://bintray.com/yaroslav-orel/ExtendNG/ExtendNG/1.0/link)
+[ ![Download](https://api.bintray.com/packages/yaroslav-orel/ExtendNG/ExtendNG/images/download.svg) ](https://bintray.com/yaroslav-orel/ExtendNG/ExtendNG/_latestVersion)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.yaroslav-orel/ExtendNG/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/com.github.yaroslav-orel/ExtendNG)
 [![Build Status](https://travis-ci.org/yaroslav-orel/ExtendNG.svg?branch=master)](https://travis-ci.org/yaroslav-orel/ExtendNG)
 [![Sonarqube quality gate](https://sonarqube.com/api/badges/gate?key=com.github.yaroslav-orel:ExtendNG)](https://sonarqube.com/dashboard/index?id=com.github.yaroslav-orel:ExtendNG)
 
