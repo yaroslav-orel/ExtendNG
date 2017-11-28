@@ -15,7 +15,7 @@ plugins {
 }
 
 group = 'com.github.yaroslav-orel'
-version = '1.0'
+version = '1.0.1'
 description 'Convenient TestNG Listeners'
 
 ext {
@@ -26,7 +26,9 @@ ext {
 
 apply plugin: 'java'
 apply plugin: 'maven'
+apply plugin: 'maven-publish'
 apply from: "${gradleScriptDir}/bintray.gradle"
+apply from: "${gradleScriptDir}/maven-publish.gradle"
 
 sourceCompatibility = 1.8
 
@@ -62,6 +64,5 @@ task sourcesJar(type: Jar) {
 artifacts {
     archives javadocJar, sourcesJar
 }
-
 
 

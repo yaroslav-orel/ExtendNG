@@ -1,0 +1,52 @@
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+
+install {
+    repositories.mavenInstaller {
+        customizePom(pom, project)
+    }
+}
+
+def customizePom(pom, gradleProject) {
+    pom.whenConfigured { generatedPom ->
+        // eliminate testng-scoped dependencies (no need in maven central poms)
+        generatedPom.dependencies.removeAll { dep ->
+            dep.scope == "test"
+        }
+
+        // sort to make pom dependencies order consistent to ease comparison of older poms
+        generatedPom.dependencies = generatedPom.dependencies.sort { dep ->
+            "$dep.scope:$dep.groupId:$dep.artifactId"
+        }
+
+        // add all items necessary for maven central publication
+        generatedPom.project {
+            name = gradleProject.description
+            description = gradleProject.description
+            url = "https://github.com/yaroslav-orel/ExtendNG"
+            licenses {
+                license {
+                    name = 'MIT'
+                    url = 'https://opensource.org/licenses/MIT'
+                    distribution = 'repo'
+                }
+            }
+            scm {
+                url = 'https://github.com/yaroslav-orel/ExtendNG'
+                connection = 'scm:git:git://github.com/yaroslav-orel/ExtendNG'
+                developerConnection = 'scm:git:git://github.com/yaroslav-orel/ExtendNG'
+            }
+            developers {
+                developer {
+                    id = 'yaroslav-orel'
+                    name = 'Yaroslav Orel'
+                    email = 'yaroslav.orel.kh@gmail.com'
+                }
+            }
+            issueManagement {
+                system = 'Github Issues'
+                url = 'https://github.com/yaroslav-orel/ExtendNG/issues'
+            }
+        }
+    }
+}
