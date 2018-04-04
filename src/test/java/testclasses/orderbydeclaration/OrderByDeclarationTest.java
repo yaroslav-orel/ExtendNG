@@ -1,44 +1,26 @@
 package testclasses.orderbydeclaration;
 
 import org.extendng.OrderByDeclarationListener;
-import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 
 @Listeners(OrderByDeclarationListener.class)
-public class OrderByDeclarationTest {
-
-    String orderOfExecution = "";
+public class OrderByDeclarationTest{
 
     @Test
-    public void nameThis(){
-        orderOfExecution += "nameThis ";
-        Assert.assertEquals(orderOfExecution, "nameThis ");
-    }
+    public void nameThis(){ }
 
     @Test
-    public void withoutDependency(){
-        orderOfExecution += "withoutDependency ";
-        Assert.assertEquals(orderOfExecution, "nameThis withoutDependency ");
-    }
+    public void withoutDependency(){ }
 
     @Test
-    public void aVeryCoolTest(){
-        orderOfExecution += "aVeryCoolTest ";
-        Assert.assertEquals(orderOfExecution, "nameThis withoutDependency aVeryCoolTest ");
-    }
+    public void aVeryCoolTest(){ }
 
     @Test
-    public void veryImportant(){
-        orderOfExecution += "veryImportant ";
-        Assert.assertEquals(orderOfExecution, "nameThis withoutDependency aVeryCoolTest veryImportant ");
-    }
+    public void veryImportant(){ }
 
     @Test
-    public void needThisToBeLast(){
-        orderOfExecution += "needThisToBeLast";
-        Assert.assertEquals(orderOfExecution, "nameThis withoutDependency aVeryCoolTest veryImportant needThisToBeLast");
-    }
+    public void needThisToBeLast(){ }
 
 }
