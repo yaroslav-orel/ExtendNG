@@ -1,4 +1,4 @@
-package orderbydeclaration;
+package testclasses.orderbydeclaration;
 
 import org.extendng.OrderByDeclarationListener;
 import org.testng.Assert;

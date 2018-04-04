@@ -1,15 +1,11 @@
-package methodingroups;
+package testclasses.methodingroups;
 
 import org.extendng.AfterMethodInGroups;
 import org.extendng.BeforeMethodInGroups;
-import org.extendng.MethodInGroupsListener;
 import org.testng.Assert;
-import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-@Listeners(MethodInGroupsListener.class)
-public class DoNotInvokeTest {
-
+public class ListenerAbsentTest {
     private int beforeMethodInGroupInvokedCount = 0;
     private int afterMethodInGroupInvokedCount = 0;
 
@@ -23,14 +19,13 @@ public class DoNotInvokeTest {
         afterMethodInGroupInvokedCount += 1;
     }
 
-    @Test(groups = "notTarget")
-    public void beforeIsNotInvokedWithoutGroup(){
+    @Test(groups = "target")
+    public void beforeIsNotExecutedWithoutListener(){
         Assert.assertEquals(beforeMethodInGroupInvokedCount, 0);
     }
 
-    @Test(dependsOnMethods = "beforeIsNotInvokedWithoutGroup")
-    public void afterIsNotInvokedWithoutGroup(){
+    @Test(dependsOnMethods = "beforeIsNotExecutedWithoutListener")
+    public void afterIsNotExecutedWithoutListener(){
         Assert.assertEquals(afterMethodInGroupInvokedCount, 0);
     }
-
 }

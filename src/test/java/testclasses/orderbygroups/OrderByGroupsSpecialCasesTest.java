@@ -1,4 +1,4 @@
-package orderbygroups;
+package testclasses.orderbygroups;
 
 import org.extendng.OrderByGroupsListener;
 import org.testng.Assert;

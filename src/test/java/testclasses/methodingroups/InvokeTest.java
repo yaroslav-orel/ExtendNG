@@ -1,4 +1,4 @@
-package methodingroups;
+package testclasses.methodingroups;
 
 import org.extendng.AfterMethodInGroups;
 import org.extendng.BeforeMethodInGroups;
@@ -7,40 +7,37 @@ import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-@Listeners(MethodInGroupsListener.class)
-public class MultipleGroupsTest {
+@Listeners({MethodInGroupsListener.class})
+public class InvokeTest {
 
     private int beforeMethodInGroupInvokedCount = 0;
     private int afterMethodInGroupInvokedCount = 0;
 
-    @BeforeMethodInGroups(groups = {"one", "two", "three"})
-    private void before(){
+    @BeforeMethodInGroups(groups = "target")
+    public void before(){
         beforeMethodInGroupInvokedCount += 1;
     }
 
-    @AfterMethodInGroups(groups = {"one", "two", "three"})
-    private void after(){
+    @AfterMethodInGroups(groups = "target")
+    public void after(){
         afterMethodInGroupInvokedCount += 1;
     }
 
-    @Test(groups = "one")
-    public void multipleGroupsOneMatch(){
+    @Test(groups = "target")
+    public void beforeIsInvokedBeforeTest1(){
         Assert.assertEquals(beforeMethodInGroupInvokedCount, 1);
+        Assert.assertEquals(afterMethodInGroupInvokedCount, 0);
     }
 
-    @Test(groups = {"two","four"}, dependsOnMethods = "multipleGroupsOneMatch")
-    public void multipleGroupsOneMatchOneMiss(){
+    @Test(groups = "target", dependsOnMethods = "beforeIsInvokedBeforeTest1")
+    public void beforeIsInvokedBeforeTest2(){
         Assert.assertEquals(beforeMethodInGroupInvokedCount, 2);
         Assert.assertEquals(afterMethodInGroupInvokedCount, 1);
     }
 
-    @Test(groups = {"five", "six", "seven"}, dependsOnMethods = "multipleGroupsOneMatchOneMiss")
-    public void multipleGroupsNoMatch(){
+    @Test(dependsOnMethods = "beforeIsInvokedBeforeTest2")
+    public void afterIsInvokedAfterEachTest(){
         Assert.assertEquals(beforeMethodInGroupInvokedCount, 2);
-    }
-
-    @Test(dependsOnMethods = "multipleGroupsNoMatch")
-    public void multipleGroupsAfterNoMatch(){
         Assert.assertEquals(afterMethodInGroupInvokedCount, 2);
     }
 }

@@ -1,4 +1,4 @@
-package orderbydeclaration;
+package testclasses.orderbydeclaration;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;

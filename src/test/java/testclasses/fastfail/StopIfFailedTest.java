@@ -1,4 +1,4 @@
-package fastfail;
+package testclasses.fastfail;
 
 import org.extendng.FastFailListener;
 import org.testng.Assert;

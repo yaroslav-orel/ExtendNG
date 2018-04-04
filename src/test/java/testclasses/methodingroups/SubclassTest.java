@@ -1,4 +1,4 @@
-package methodingroups;
+package testclasses.methodingroups;
 
 import org.extendng.MethodInGroupsListener;
 import org.testng.Assert;

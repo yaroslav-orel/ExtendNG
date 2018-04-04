@@ -1,4 +1,4 @@
-package methodingroups;
+package testclasses.methodingroups;
 
 import org.extendng.AfterMethodInGroups;
 import org.extendng.BeforeMethodInGroups;
