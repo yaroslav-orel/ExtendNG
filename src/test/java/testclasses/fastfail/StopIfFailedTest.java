@@ -2,7 +2,6 @@ package testclasses.fastfail;
 
 import org.extendng.FastFailListener;
 import org.testng.Assert;
-import org.testng.SkipException;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
@@ -10,16 +9,14 @@ import org.testng.annotations.Test;
 public class StopIfFailedTest {
 
     @Test(priority = 0)
-    public void doesntThrowException(){ }
+    public void doesntThrowException(){}
 
-    @Test(expectedExceptions = AssertionError.class, priority = 1)
-    public void throwsException(){
-        Assert.fail();
-    }
+    @Test(priority = 1)
+    public void throwsException(){ Assert.fail(); }
 
-    @Test(expectedExceptions = SkipException.class, expectedExceptionsMessageRegExp = ".* 'throwsException'", priority = 2)
-    public void DoesNotRunAfterException1(){ }
+    @Test(priority = 2)
+    public void doesNotRunAfterException1(){}
 
-    @Test(expectedExceptions = SkipException.class, expectedExceptionsMessageRegExp = ".* .* 'throwsException'", priority = 3)
+    @Test(priority = 3)
     public void doesNotRunAfterException2(){}
 }
