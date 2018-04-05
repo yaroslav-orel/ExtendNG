@@ -1,21 +1,17 @@
 package org.extendng;
 
-import kiss.util.Reflect;
 import lombok.val;
 import org.testng.IMethodInstance;
 import org.testng.IMethodInterceptor;
 import org.testng.ITestContext;
 
 import java.lang.reflect.Method;
-import java.util.Comparator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Stream;
+import java.util.*;
 
 import static java.util.Comparator.comparingInt;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
+import static org.extendng.ReflectionUtils.getClassMethodsInOrder;
 import static org.extendng.ReflectionUtils.shouldBeInvoked;
 
 public class OrderByDeclarationListener implements IMethodInterceptor {
@@ -39,9 +35,11 @@ public class OrderByDeclarationListener implements IMethodInterceptor {
     private void orderTestsByDeclarationInsideTestClassesWithListener(Map<Object,List<IMethodInstance>> testClassesMap) {
         testClassesMap.entrySet().stream()
                 .filter(e -> shouldBeInvoked(e.getKey().getClass(), OrderByDeclarationListener.class))
-                .forEach(entry -> entry.getValue().sort(
-                        byDeclaration(Stream.of(Reflect.getDeclaredMethodsInOrder(entry.getKey().getClass())).collect(toList()))
-                ));
+                .forEach(entry -> entry.getValue().sort(byDeclaration(entry.getKey().getClass())));
+    }
+
+    private Comparator<IMethodInstance> byDeclaration(Class testClass){
+        return byDeclaration(getClassMethodsInOrder(testClass, new ArrayList<>()));
     }
 
     private Comparator<IMethodInstance> byDeclaration(List<Method> classMethodsInOrder){

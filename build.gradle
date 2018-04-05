@@ -39,6 +39,7 @@ repositories {
 dependencies {
     compile 'org.testng:testng:6.13'
     compile 'com.google.guava:guava:23.5-jre'
+    compile 'org.apache.commons:commons-lang3:3.7'
     compile 'com.github.wmacevoy:kiss:1.0'
     compile 'org.projectlombok:lombok:1.16.18'
     compile 'one.util:streamex:0.6.6'
