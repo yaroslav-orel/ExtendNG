@@ -1,6 +1,7 @@
 import lombok.val;
 import org.testng.annotations.Test;
 import testclasses.fastfail.StopIfFailedTest;
+import testclasses.orderbydeclaration.ChildTest;
 import testclasses.orderbydeclaration.DoNotOrderWithoutListener;
 import testclasses.orderbydeclaration.OrderByDeclarationTest;
 
@@ -40,6 +41,19 @@ public class TestSuite {
                 "aNiceOne()",
                 "boyOhBoy()",
                 "test1()"
+        );
+    }
+
+    @Test
+    public void orderByDeclarationSuperclassMethodsAlsoOrdered(){
+        val invokedMethodNameListener = TestUtils.run(new InvokedMethodNameListener(), ChildTest.class);
+
+        assertThat(invokedMethodNameListener.getInvokedMethodNames()).containsExactly(
+                "theTestThatShouldBeFirst()",
+                "aTestThatShouldBeSecond()",
+                "betterThisToBeLastInParent()",
+                "firstInChildCLass()",
+                "aLastOne()"
         );
     }
 }
