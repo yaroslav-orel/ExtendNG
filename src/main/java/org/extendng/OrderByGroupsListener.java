@@ -1,68 +1,56 @@
 package org.extendng;
 
 import lombok.val;
+import org.apache.commons.lang3.ArrayUtils;
 import org.testng.IMethodInstance;
 import org.testng.IMethodInterceptor;
 import org.testng.ITestContext;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map.Entry;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Stream;
 
-import static java.util.Arrays.asList;
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.toList;
+import static java.util.Comparator.comparingInt;
+import static org.extendng.MethodInterceptorUtils.filterAndSortTests;
 import static org.extendng.ReflectionUtils.shouldBeInvoked;
 
 public class OrderByGroupsListener implements IMethodInterceptor {
 
     @Override
     public List<IMethodInstance> intercept(List<IMethodInstance> methods, ITestContext context) {
-        return methods.stream()
-                .collect(groupingBy(IMethodInstance::getInstance))
-                    .entrySet().stream()
-                        .flatMap(OrderByGroupsListener::orderByGroupsIfListenerIsApplied)
-                            .collect(toList());
+        return filterAndSortTests(methods,
+                OrderByGroupsListener::shouldListen,
+                OrderByGroupsListener::sortByGroupsOrByGroupOrder);
     }
 
-    private static Stream<? extends IMethodInstance> orderByGroupsIfListenerIsApplied(Entry<Object, List<IMethodInstance>> entry) {
-        if (shouldBeInvoked(entry.getKey().getClass(), OrderByGroupsListener.class)) {
-            return orderByGroups(entry);
-        }
-        else return entry.getValue().stream();
+    public static void sortByGroupsOrByGroupOrder(Map.Entry<Object, List<IMethodInstance>> entry){
+        entry.getValue().sort(byGroupsOrByGroupOrder(entry.getKey()));
     }
 
-    private static Stream<IMethodInstance> orderByGroups(Entry<Object, List<IMethodInstance>> entry) {
-        return entry.getValue().stream()
-                .collect(groupingBy(method -> asList(method.getMethod().getGroups())))
-                .entrySet().stream()
-                .sorted(byGroupOrder())
-                .flatMap(e -> e.getValue().stream());
+    public static Comparator<IMethodInstance> byGroupsOrByGroupOrder(Object testClassInstance){
+        val groupOrder = getGroupOrder(testClassInstance);
+
+        return groupOrder.isPresent() ?
+                comparingInt(method -> getGroupIndex(method, groupOrder.get())):
+                comparingInt(method -> Arrays.hashCode(method.getMethod().getGroups()));
     }
 
-    public static Comparator<Entry<List<String>, List<IMethodInstance>>> byGroupOrder(){
-        return (o1, o2) -> getGroupOrder(o1)
-                .map(order -> Integer.compare(getGroupIndex(o1, order), getGroupIndex(o2, order)))
-                .orElse(0);
-    }
-
-    private static int getGroupIndex(Entry<List<String>, List<IMethodInstance>> o1, String[] order) {
-        return Stream.of(order)
-                .filter(item -> o1.getKey().contains(item))
-                .findFirst()
-                .map(item -> asList(order).indexOf(item))
-                .orElse(-1);
-    }
-
-    private static Optional<String[]> getGroupOrder(Entry<List<String>, List<IMethodInstance>> comparisonInstance){
-        val testClassInstance = comparisonInstance.getValue().get(0).getInstance();
-
+    private static Optional<List<String>> getGroupOrder(Object testClassInstance){
         return Stream.of(testClassInstance.getClass().getDeclaredMethods())
                 .filter(method -> method.isAnnotationPresent(GroupOrder.class))
                 .findFirst()
-                .map(method -> (String[]) ReflectionUtils.invokeMethod(method, testClassInstance));
+                .map(method -> (List<String>) ReflectionUtils.invokeMethod(method, testClassInstance));
     }
-    
+
+    private static int getGroupIndex(IMethodInstance method, List<String> order) {
+        return order.stream()
+                .filter(item -> ArrayUtils.contains(method.getMethod().getGroups(), item))
+                .findFirst()
+                .map(item -> order.indexOf(item))
+                .get();
+    }
+
+    private static boolean shouldListen(Map.Entry<Object, List<IMethodInstance>> testClass){
+        return shouldBeInvoked(testClass.getKey().getClass(), OrderByGroupsListener.class);
+    }
+
 }
