@@ -1,6 +1,7 @@
 import lombok.val;
 import org.testng.annotations.Test;
 import testclasses.fastfail.StopIfFailedTest;
+import testclasses.methodingroups.*;
 import testclasses.orderbydeclaration.ChildTest;
 import testclasses.orderbydeclaration.DoNotOrderWithoutListener;
 import testclasses.orderbydeclaration.OrderByDeclarationTest;
@@ -55,5 +56,58 @@ public class TestSuite {
                 "firstInChildCLass()",
                 "aLastOne()"
         );
+    }
+
+    @Test
+    public void methodInGroups(){
+        TestUtils.run(InvocationTest.class);
+
+        assertThat(InvocationTest.beforeCalledCount).isEqualTo(2);
+        assertThat(InvocationTest.afterCalledCount).isEqualTo(2);
+    }
+
+    @Test
+    public void methodInGroupsGroupsDontMatch(){
+        TestUtils.run(DoNotInvokeTest.class);
+
+        assertThat(DoNotInvokeTest.beforeCalledCount).isEqualTo(0);
+        assertThat(DoNotInvokeTest.afterCalledCount).isEqualTo(0);
+    }
+
+    @Test
+    public void methodInGroupsNoListener(){
+        TestUtils.run(ListenerAbsentTest.class);
+
+        assertThat(ListenerAbsentTest.beforeCalledCount).isEqualTo(0);
+        assertThat(ListenerAbsentTest.afterCalledCount).isEqualTo(0);
+    }
+
+    @Test
+    public void methodInGroupsMultipleGroups(){
+        TestUtils.run(MultipleGroupsTest.class);
+
+        assertThat(MultipleGroupsTest.beforeCalledCount).isEqualTo(2);
+        assertThat(MultipleGroupsTest.afterCalledCount).isEqualTo(2);
+    }
+
+    @Test
+    public void methodInGroupsMultipleMethods(){
+        TestUtils.run(MultipleMethodsTest.class);
+
+        assertThat(MultipleMethodsTest.isBefore1Called).isTrue();
+        assertThat(MultipleMethodsTest.isBefore2Called).isTrue();
+        assertThat(MultipleMethodsTest.isAfter1Called).isTrue();
+        assertThat(MultipleMethodsTest.isAfter2Called).isTrue();
+
+        assertThat(MultipleMethodsTest.beforeCalledFirst).isEqualTo("before1");
+        assertThat(MultipleMethodsTest.afterCalledFirst).isEqualTo("after1");
+    }
+
+    @Test
+    public void methodInGroupsWithSuperclass(){
+        TestUtils.run(SubclassTest.class);
+
+        assertThat(BaseClass.isBeforeCalled).isTrue();
+        assertThat(BaseClass.isAfterCalled).isTrue();
     }
 }

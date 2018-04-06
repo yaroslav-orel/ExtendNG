@@ -13,6 +13,11 @@ public class TestUtils {
         return listener;
     }
 
+    public static void run(final Class<?>... testClasses){
+        final TestNG tng = create(testClasses);
+        tng.run();
+    }
+
     private static TestNG create() {
         final TestNG result = new TestNG();
         result.setUseDefaultListeners(false);
