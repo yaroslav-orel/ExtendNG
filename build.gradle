@@ -53,6 +53,10 @@ dependencies {
 
 test{
     useTestNG()
+
+    filter{
+        includeTestsMatching 'TestSuite'
+    }
 }
 
 task wrapper(type: Wrapper) {
