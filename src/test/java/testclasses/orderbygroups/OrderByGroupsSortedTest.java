@@ -2,53 +2,36 @@ package testclasses.orderbygroups;
 
 import org.extendng.GroupOrder;
 import org.extendng.OrderByGroupsListener;
-import org.testng.Assert;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
+
+import java.util.List;
+
+import static java.util.Arrays.asList;
 
 @Listeners(OrderByGroupsListener.class)
 public class OrderByGroupsSortedTest {
 
-    String orderOfExecution = "";
-
     @GroupOrder
-    public String[] groupOrder(){
-        return new String[]{"first", "second", "third"};
-    }
-
-    @AfterClass
-    public void finalAssert(){
-        Assert.assertEquals(orderOfExecution, "test1 wayToName coveredByTests treatThisRight originalName thisOne ");
+    public List<String> groupOrder(){
+        return asList("first", "second", "third");
     }
 
     @Test(groups = "first")
-    public void test1(){
-        orderOfExecution += "test1 ";
-    }
+    public void test1(){ }
 
     @Test(groups = "second")
-    public void coveredByTests(){
-        orderOfExecution += "coveredByTests ";
-    }
+    public void coveredByTests(){ }
 
     @Test(groups = "third")
-    public void thisOne(){
-        orderOfExecution += "thisOne ";
-    }
+    public void thisOne(){ }
 
     @Test(groups = "first")
-    public void wayToName(){
-        orderOfExecution += "wayToName ";
-    }
+    public void wayToName(){ }
 
     @Test(groups = "second")
-    public void treatThisRight(){
-        orderOfExecution += "treatThisRight ";
-    }
+    public void treatThisRight(){ }
 
     @Test(groups = "third")
-    public void originalName(){
-        orderOfExecution += "originalName ";
-    }
+    public void originalName(){ }
 }

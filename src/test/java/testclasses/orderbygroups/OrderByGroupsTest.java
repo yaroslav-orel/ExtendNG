@@ -1,55 +1,28 @@
 package testclasses.orderbygroups;
 
 import org.extendng.OrderByGroupsListener;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
 
 @Listeners(OrderByGroupsListener.class)
 public class OrderByGroupsTest {
 
-    String orderOfExecution = "";
+    @Test(groups = "a")
+    public void test1(){ }
 
-    @AfterClass
-    public void finalAssert(){
-        SoftAssert softAssert = new SoftAssert();
+    @Test(groups = "b")
+    public void coveredByTests(){ }
 
-        softAssert.assertTrue(orderOfExecution.contains("test1 wayToName"), "group 'first' was not grouped");
-        softAssert.assertTrue(orderOfExecution.contains("originalName thisOne"), "group 'third' was not grouped");
-        softAssert.assertTrue(orderOfExecution.contains("coveredByTests treatThisRight"), "group 'second' was not grouped");
+    @Test(groups = "b")
+    public void thisOne(){ }
 
-        softAssert.assertAll();
-    }
+    @Test(groups = "a")
+    public void wayToName(){ }
 
-    @Test(groups = "first")
-    public void test1(){
-        orderOfExecution += "test1 ";
-    }
+    @Test(groups = "c")
+    public void treatThisRight(){ }
 
-    @Test(groups = "second")
-    public void coveredByTests(){
-        orderOfExecution += "coveredByTests ";
-    }
-
-    @Test(groups = "third")
-    public void thisOne(){
-        orderOfExecution += "thisOne ";
-    }
-
-    @Test(groups = "first")
-    public void wayToName(){
-        orderOfExecution += "wayToName ";
-    }
-
-    @Test(groups = "second")
-    public void treatThisRight(){
-        orderOfExecution += "treatThisRight ";
-    }
-
-    @Test(groups = "third")
-    public void originalName(){
-        orderOfExecution += "originalName ";
-    }
+    @Test(groups = "c")
+    public void originalName(){ }
 
 }

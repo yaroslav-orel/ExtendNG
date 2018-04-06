@@ -5,6 +5,9 @@ import testclasses.methodingroups.*;
 import testclasses.orderbydeclaration.ChildTest;
 import testclasses.orderbydeclaration.DoNotOrderWithoutListener;
 import testclasses.orderbydeclaration.OrderByDeclarationTest;
+import testclasses.orderbygroups.OrderByGroupsSortedTest;
+import testclasses.orderbygroups.OrderByGroupsSpecialCasesTest;
+import testclasses.orderbygroups.OrderByGroupsTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -109,5 +112,34 @@ public class TestSuite {
 
         assertThat(BaseClass.isBeforeCalled).isTrue();
         assertThat(BaseClass.isAfterCalled).isTrue();
+    }
+
+    @Test
+    public void orderByGroups(){
+        val listener = TestUtils.run(new InvokedMethodNameListener(), OrderByGroupsTest.class);
+
+        assertThat(listener.getInvokedMethodNames()).containsSequence("test1()", "wayToName()");
+        assertThat(listener.getInvokedMethodNames()).containsSequence("coveredByTests()", "thisOne()");
+        assertThat(listener.getInvokedMethodNames()).containsSequence("originalName()", "treatThisRight()");
+    }
+
+    @Test
+    public void orderByGroupsSortedGroups(){
+        val listener = TestUtils.run(new InvokedMethodNameListener(), OrderByGroupsSortedTest.class);
+
+        assertThat(listener.getInvokedMethodNames()).containsExactly(
+                "test1()", "wayToName()",
+                "coveredByTests()", "treatThisRight()",
+                "originalName()", "thisOne()"
+        );
+    }
+
+    @Test
+    public void orderByGroupsSpecialCases(){
+        val listener = TestUtils.run(new InvokedMethodNameListener(), OrderByGroupsSpecialCasesTest.class);
+
+        assertThat(listener.getInvokedMethodNames()).containsSequence("withMultipleGroups()", "actuallyWithOneGroup()");
+        assertThat(listener.getInvokedMethodNames()).containsSequence("anotherTestWithoutGroups()", "zeroGroups()");
+        assertThat(listener.getInvokedMethodNames()).containsSequence("betThisWorks()", "orderMeMan()");
     }
 }
