@@ -1,4 +1,5 @@
 import lombok.val;
+import org.assertj.core.api.SoftAssertions;
 import org.testng.annotations.Test;
 import testclasses.fastfail.StopIfFailedTest;
 import testclasses.methodingroups.*;
@@ -15,11 +16,13 @@ public class TestSuite {
 
     @Test
     public void fastFailPositive(){
-        InvokedMethodNameListener orderListener = TestUtils.run(new InvokedMethodNameListener(), StopIfFailedTest.class);
+        val orderListener = TestUtils.run(new InvokedMethodNameListener(), StopIfFailedTest.class);
 
-        assertThat(orderListener.getSucceedMethodNames()).containsExactly("doesntThrowException()");
-        assertThat(orderListener.getFailedMethodNames()).containsExactly("throwsException()");
-        assertThat(orderListener.getSkippedMethodNames()).containsExactly("doesNotRunAfterException1()", "doesNotRunAfterException2()");
+        SoftAssertions softly = new SoftAssertions();
+        softly.assertThat(orderListener.getSucceedMethodNames()).containsExactly("doesntThrowException()");
+        softly.assertThat(orderListener.getFailedMethodNames()).containsExactly("throwsException()");
+        softly.assertThat(orderListener.getSkippedMethodNames()).containsExactly("doesNotRunAfterException1()", "doesNotRunAfterException2()");
+        softly.assertAll();
     }
 
     @Test
@@ -65,62 +68,76 @@ public class TestSuite {
     public void methodInGroups(){
         TestUtils.run(InvocationTest.class);
 
-        assertThat(InvocationTest.beforeCalledCount).isEqualTo(2);
-        assertThat(InvocationTest.afterCalledCount).isEqualTo(2);
+        SoftAssertions softly = new SoftAssertions();
+        softly.assertThat(InvocationTest.beforeCalledCount).isEqualTo(2);
+        softly.assertThat(InvocationTest.afterCalledCount).isEqualTo(2);
+        softly.assertAll();
     }
 
     @Test
     public void methodInGroupsGroupsDontMatch(){
         TestUtils.run(DoNotInvokeTest.class);
 
-        assertThat(DoNotInvokeTest.beforeCalledCount).isEqualTo(0);
-        assertThat(DoNotInvokeTest.afterCalledCount).isEqualTo(0);
+        SoftAssertions softly = new SoftAssertions();
+        softly.assertThat(DoNotInvokeTest.beforeCalledCount).isEqualTo(0);
+        softly.assertThat(DoNotInvokeTest.afterCalledCount).isEqualTo(0);
+        softly.assertAll();
     }
 
     @Test
     public void methodInGroupsNoListener(){
         TestUtils.run(ListenerAbsentTest.class);
 
-        assertThat(ListenerAbsentTest.beforeCalledCount).isEqualTo(0);
-        assertThat(ListenerAbsentTest.afterCalledCount).isEqualTo(0);
+        SoftAssertions softly = new SoftAssertions();
+        softly.assertThat(ListenerAbsentTest.beforeCalledCount).isEqualTo(0);
+        softly.assertThat(ListenerAbsentTest.afterCalledCount).isEqualTo(0);
+        softly.assertAll();
     }
 
     @Test
     public void methodInGroupsMultipleGroups(){
         TestUtils.run(MultipleGroupsTest.class);
 
-        assertThat(MultipleGroupsTest.beforeCalledCount).isEqualTo(2);
-        assertThat(MultipleGroupsTest.afterCalledCount).isEqualTo(2);
+        SoftAssertions softly = new SoftAssertions();
+        softly.assertThat(MultipleGroupsTest.beforeCalledCount).isEqualTo(2);
+        softly.assertThat(MultipleGroupsTest.afterCalledCount).isEqualTo(2);
+        softly.assertAll();
     }
 
     @Test
     public void methodInGroupsMultipleMethods(){
         TestUtils.run(MultipleMethodsTest.class);
 
-        assertThat(MultipleMethodsTest.isBefore1Called).isTrue();
-        assertThat(MultipleMethodsTest.isBefore2Called).isTrue();
-        assertThat(MultipleMethodsTest.isAfter1Called).isTrue();
-        assertThat(MultipleMethodsTest.isAfter2Called).isTrue();
+        SoftAssertions softly = new SoftAssertions();
+        softly.assertThat(MultipleMethodsTest.isBefore1Called).isTrue();
+        softly.assertThat(MultipleMethodsTest.isBefore2Called).isTrue();
+        softly.assertThat(MultipleMethodsTest.isAfter1Called).isTrue();
+        softly.assertThat(MultipleMethodsTest.isAfter2Called).isTrue();
 
-        assertThat(MultipleMethodsTest.beforeCalledFirst).isEqualTo("before1");
-        assertThat(MultipleMethodsTest.afterCalledFirst).isEqualTo("after1");
+        softly.assertThat(MultipleMethodsTest.beforeCalledFirst).isEqualTo("before1");
+        softly.assertThat(MultipleMethodsTest.afterCalledFirst).isEqualTo("after1");
+        softly.assertAll();
     }
 
     @Test
     public void methodInGroupsWithSuperclass(){
         TestUtils.run(SubclassTest.class);
 
-        assertThat(BaseClass.isBeforeCalled).isTrue();
-        assertThat(BaseClass.isAfterCalled).isTrue();
+        SoftAssertions softly = new SoftAssertions();
+        softly.assertThat(BaseClass.isBeforeCalled).isTrue();
+        softly.assertThat(BaseClass.isAfterCalled).isTrue();
+        softly.assertAll();
     }
 
     @Test
     public void orderByGroups(){
         val listener = TestUtils.run(new InvokedMethodNameListener(), OrderByGroupsTest.class);
 
-        assertThat(listener.getInvokedMethodNames()).containsSequence("test1()", "wayToName()");
-        assertThat(listener.getInvokedMethodNames()).containsSequence("coveredByTests()", "thisOne()");
-        assertThat(listener.getInvokedMethodNames()).containsSequence("originalName()", "treatThisRight()");
+        SoftAssertions softly = new SoftAssertions();
+        softly.assertThat(listener.getInvokedMethodNames()).containsSequence("test1()", "wayToName()");
+        softly.assertThat(listener.getInvokedMethodNames()).containsSequence("coveredByTests()", "thisOne()");
+        softly.assertThat(listener.getInvokedMethodNames()).containsSequence("originalName()", "treatThisRight()");
+        softly.assertAll();
     }
 
     @Test
@@ -138,8 +155,10 @@ public class TestSuite {
     public void orderByGroupsSpecialCases(){
         val listener = TestUtils.run(new InvokedMethodNameListener(), OrderByGroupsSpecialCasesTest.class);
 
-        assertThat(listener.getInvokedMethodNames()).containsSequence("withMultipleGroups()", "actuallyWithOneGroup()");
-        assertThat(listener.getInvokedMethodNames()).containsSequence("anotherTestWithoutGroups()", "zeroGroups()");
-        assertThat(listener.getInvokedMethodNames()).containsSequence("betThisWorks()", "orderMeMan()");
+        SoftAssertions softly = new SoftAssertions();
+        softly.assertThat(listener.getInvokedMethodNames()).containsSequence("withMultipleGroups()", "actuallyWithOneGroup()");
+        softly.assertThat(listener.getInvokedMethodNames()).containsSequence("anotherTestWithoutGroups()", "zeroGroups()");
+        softly.assertThat(listener.getInvokedMethodNames()).containsSequence("betThisWorks()", "orderMeMan()");
+        softly.assertAll();
     }
 }
