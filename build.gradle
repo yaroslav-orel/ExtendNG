@@ -25,6 +25,7 @@ ext {
 
 
 apply plugin: 'java'
+apply plugin: "jacoco"
 apply plugin: 'maven'
 apply plugin: 'maven-publish'
 apply from: "${gradleScriptDir}/bintray.gradle"
@@ -47,8 +48,17 @@ dependencies {
 
     testCompile 'org.mockito:mockito-core:2.17.0'
     testCompile 'org.assertj:assertj-core:3.9.1'
+}
 
+jacoco {
+    toolVersion = '0.8.0'
+}
 
+sonarqube {
+    properties {
+        property "sonar.junit.reportPaths" , "${project.buildDir}/test-results/test"
+        property "sonar.jacoco.reportPaths", "${project.buildDir}/jacoco/test.exec"
+    }
 }
 
 test{
