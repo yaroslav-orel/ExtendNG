@@ -3,6 +3,7 @@ package testclasses.methodingroups;
 import org.extendng.AfterMethodInGroups;
 import org.extendng.BeforeMethodInGroups;
 import org.extendng.MethodInGroupsListener;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
@@ -17,6 +18,9 @@ public class InvocationTest {
 
     @AfterMethodInGroups(groups = "target")
     public void after(){ afterCalledCount++; }
+
+    @BeforeMethod
+    public void setUp(){ }
 
     @Test(groups = "target")
     public void tesWithTargetGroup1(){ }
