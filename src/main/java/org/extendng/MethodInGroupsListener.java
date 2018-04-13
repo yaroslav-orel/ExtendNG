@@ -86,13 +86,13 @@ public class MethodInGroupsListener implements IInvokedMethodListener {
     private static Object toInjectable(Parameter param, ITestResult result){
         val type = param.getType();
 
-        if(type.equals(ITestResult.class))
+        if(type == ITestResult.class)
             return result;
-        else if(type.equals(ITestContext.class))
+        else if(type == ITestContext.class)
             return result.getTestContext();
-        else if(type.equals(XmlTest.class))
+        else if(type == XmlTest.class)
             return result.getMethod().getXmlTest();
-        else if(type.equals(Method.class))
+        else if(type == Method.class)
             return result.getMethod().getConstructorOrMethod().getMethod();
         else
             throw new IllegalArgumentException("Parameter of type " + type + " is not supported");
