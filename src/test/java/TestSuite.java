@@ -130,6 +130,13 @@ public class TestSuite {
     }
 
     @Test
+    public void methodInGroupsInjection(){
+        val invokedMethodNameListener = TestUtils.run(new InvokedMethodNameListener(), InjectionTest.class);
+
+        assertThat(invokedMethodNameListener.getSucceedMethodNames()).containsExactly("injectionPositive()");
+    }
+
+    @Test
     public void orderByGroups(){
         val listener = TestUtils.run(new InvokedMethodNameListener(), OrderByGroupsTest.class);
 

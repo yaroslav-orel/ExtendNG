@@ -1,12 +1,17 @@
 package org.extendng;
 
+import lombok.val;
 import org.testng.IInvokedMethod;
 import org.testng.IInvokedMethodListener;
+import org.testng.ITestContext;
 import org.testng.ITestResult;
+import org.testng.xml.XmlTest;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.stream.Stream;
 
 import static com.google.common.collect.Sets.intersection;
 import static com.google.common.collect.Sets.newHashSet;
@@ -22,7 +27,7 @@ public class MethodInGroupsListener implements IInvokedMethodListener {
                     .filter(MethodInGroupsListener::hasBeforeMethodAnnotation)
                     .filter(method -> hasTheSameBeforeMethodGroupAsTest(method, iInvokedMethod))
                     .sorted(byBeforeMethodPriority())
-                    .forEach(method -> invokeMethod(method, iTestResult.getInstance()));
+                    .forEach(method -> invokeMethodWithInjection(method, iTestResult));
         }
     }
 
@@ -33,7 +38,7 @@ public class MethodInGroupsListener implements IInvokedMethodListener {
                     .filter(MethodInGroupsListener::hasAfterMethodAnnotation)
                     .filter(method -> hasTheSameAfterMethodGroupAsTest(method, iInvokedMethod))
                     .sorted(byAfterMethodPriority())
-                    .forEach(method -> invokeMethod(method, iTestResult.getInstance()));
+                    .forEach(method -> invokeMethodWithInjection(method, iTestResult));
         }
     }
 
@@ -67,6 +72,30 @@ public class MethodInGroupsListener implements IInvokedMethodListener {
 
     private static boolean intersects(String[] testMethodGroups, String[] methodInGropGroups) {
         return !intersection(newHashSet(testMethodGroups), newHashSet(methodInGropGroups)).isEmpty();
+    }
+
+    private static Object invokeMethodWithInjection(Method method, ITestResult result){
+        val params = method.getParameters();
+        if(params.length == 0){
+            return invokeMethod(method, result.getInstance());
+        }
+        val injectables = Stream.of(params).map(param -> toInjectable(param, result)).toArray();
+        return invokeMethod(method, result.getInstance(), injectables);
+    }
+
+    private static Object toInjectable(Parameter param, ITestResult result){
+        val type = param.getType();
+
+        if(type.equals(ITestResult.class))
+            return result;
+        else if(type.equals(ITestContext.class))
+            return result.getTestContext();
+        else if(type.equals(XmlTest.class))
+            return result.getMethod().getXmlTest();
+        else if(type.equals(Method.class))
+            return result.getMethod().getConstructorOrMethod().getMethod();
+        else
+            throw new IllegalArgumentException("Parameter of type " + type + " is not supported");
     }
 
 }
