@@ -36,9 +36,9 @@ public class ReflectionUtils {
     }
 
     @SneakyThrows
-    static Object invokeMethod(Method method, Object testInstance){
+    static Object invokeMethod(Method method, Object testInstance, Object... args){
         method.setAccessible(true);
-        return method.invoke(testInstance);
+        return method.invoke(testInstance, args);
     }
 
     public static List<Method> getAllMethods(Class testClass, List<Method> methods){
