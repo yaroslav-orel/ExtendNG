@@ -1,6 +1,7 @@
 package org.extendng;
 
 import lombok.val;
+import one.util.streamex.StreamEx;
 import org.apache.commons.lang3.ArrayUtils;
 import org.testng.IMethodInstance;
 import org.testng.IMethodInterceptor;
@@ -45,7 +46,10 @@ public class OrderByGroupsListener implements IMethodInterceptor {
 
     @SuppressWarnings("unchecked")
     private static Optional<List<String>> getGroupOrder(Object testClassInstance){
-        return Stream.of(testClassInstance.getClass().getDeclaredMethods())
+        if(testClassInstance.getClass().isAnnotationPresent(GroupOrder.class))
+            return Optional.of(StreamEx.of(testClassInstance.getClass().getAnnotation(GroupOrder.class).groups()).toList());
+        else
+            return Stream.of(testClassInstance.getClass().getDeclaredMethods())
                 .filter(method -> method.isAnnotationPresent(GroupOrder.class))
                 .findFirst()
                 .map(method -> (List<String>) invokeMethod(method, testClassInstance));

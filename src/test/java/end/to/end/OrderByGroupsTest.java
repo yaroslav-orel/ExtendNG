@@ -4,6 +4,7 @@ import lombok.val;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
 import org.testng.annotations.Test;
+import testclasses.orderbygroups.OrderByGroupsSortedOnClassTest;
 import testclasses.orderbygroups.OrderByGroupsSortedTest;
 import testclasses.orderbygroups.OrderByGroupsSpecialCasesTest;
 import util.InvokedMethodNameListener;
@@ -23,8 +24,19 @@ public class OrderByGroupsTest {
     }
 
     @Test
-    public void orderByGroupsSortedGroups(){
+    public void orderByGroupsSortedByMethod(){
         val listener = TestUtils.run(new InvokedMethodNameListener(), OrderByGroupsSortedTest.class);
+
+        Assertions.assertThat(listener.getInvokedMethodNames()).containsExactly(
+                "test1()", "wayToName()",
+                "coveredByTests()", "treatThisRight()",
+                "originalName()", "thisOne()"
+        );
+    }
+
+    @Test
+    public void orderByGroupsSortedByClass(){
+        val listener = TestUtils.run(new InvokedMethodNameListener(), OrderByGroupsSortedOnClassTest.class);
 
         Assertions.assertThat(listener.getInvokedMethodNames()).containsExactly(
                 "test1()", "wayToName()",

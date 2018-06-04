@@ -3,6 +3,7 @@ PR #31 Inject parameters into MethodInGroups
 PR #27 Make sure inherited methods are first for OrderByDeclaration
 PR #27 Cover special cases in OrderByGroupsListener
 PR #27 @GroupOrder now should return List<String> (!!!Breaking change!!!)
+PR #36 Set @GroupOrder via class
 
 1.0.1
 Initial release
