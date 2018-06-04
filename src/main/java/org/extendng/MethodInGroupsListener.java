@@ -1,17 +1,12 @@
 package org.extendng;
 
-import lombok.val;
 import org.testng.IInvokedMethod;
 import org.testng.IInvokedMethodListener;
-import org.testng.ITestContext;
 import org.testng.ITestResult;
-import org.testng.xml.XmlTest;
 
 import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.stream.Stream;
 
 import static com.google.common.collect.Sets.intersection;
 import static com.google.common.collect.Sets.newHashSet;
@@ -74,28 +69,6 @@ public class MethodInGroupsListener implements IInvokedMethodListener {
         return !intersection(newHashSet(testMethodGroups), newHashSet(methodInGropGroups)).isEmpty();
     }
 
-    private static Object invokeMethodWithInjection(Method method, ITestResult result){
-        val params = method.getParameters();
-        if(params.length == 0){
-            return invokeMethod(method, result.getInstance());
-        }
-        val injectables = Stream.of(params).map(param -> toInjectable(param, result)).toArray();
-        return invokeMethod(method, result.getInstance(), injectables);
-    }
 
-    private static Object toInjectable(Parameter param, ITestResult result){
-        val type = param.getType();
-
-        if(type == ITestResult.class)
-            return result;
-        else if(type == ITestContext.class)
-            return result.getTestContext();
-        else if(type == XmlTest.class)
-            return result.getMethod().getXmlTest();
-        else if(type == Method.class)
-            return result.getMethod().getConstructorOrMethod().getMethod();
-        else
-            throw new IllegalArgumentException("Parameter of type " + type + " is not supported");
-    }
 
 }
