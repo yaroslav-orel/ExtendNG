@@ -72,7 +72,8 @@ After test in target group
 nonTarget
 ```
 >Note: If you need several @(Before/After)MethodInGroups you can assign them priority 
-e.g. ```@BeforeMethodInGroups(priority = 1)```. Methods with lower number are executed first just like in TestNG
+e.g. ```@BeforeMethodInGroups(priority = 1)```. Methods with lower number are executed first just like in TestNG.
+
 >Note: You can inject the following objects into MethodInGroups methods: ```ITestResult```, ```Method```, ```ITestContext```, ```XmlTest``` 
 
 ### OrderByGroupsListener
