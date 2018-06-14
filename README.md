@@ -3,7 +3,7 @@
 [ ![Download](https://api.bintray.com/packages/yaroslav-orel/ExtendNG/ExtendNG/images/download.svg) ](https://bintray.com/yaroslav-orel/ExtendNG/ExtendNG/_latestVersion)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.yaroslav-orel/ExtendNG/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/com.github.yaroslav-orel/ExtendNG)
 [![Build Status](https://travis-ci.org/yaroslav-orel/ExtendNG.svg?branch=master)](https://travis-ci.org/yaroslav-orel/ExtendNG)
-[![Sonarqube quality gate](https://sonarqube.com/api/badges/gate?key=com.github.yaroslav-orel:ExtendNG)](https://sonarcloud.io/dashboard?id=com.github.yaroslav-orel%3AExtendNG)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=com.github.yaroslav-orel%3AExtendNG&metric=alert_status)](https://sonarcloud.io/dashboard?id=com.github.yaroslav-orel%3AExtendNG)
 [![Open Source Love](https://badges.frapsoft.com/os/mit/mit.svg?v=102)](https://github.com/ellerbrock/open-source-badge/)
 
 Library which provides set of convenient listeners to reduce boilerplate TestNG code.  
