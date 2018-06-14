@@ -21,13 +21,13 @@ Library which provides set of convenient listeners to reduce boilerplate TestNG 
 <dependency>
 	<groupId>com.github.yaroslav-orel</groupId>
 	<artifactId>ExtendNG</artifactId>
-	<version>1.0.1</version>
+	<version>1.1</version>
 </dependency>
 ```
 
 ### Gradle
 ```
-testCompile 'com.github.yaroslav-orel:ExtendNG:1.0.1'
+testCompile 'com.github.yaroslav-orel:ExtendNG:1.1'
 ```
 
 # Examples
@@ -73,6 +73,7 @@ nonTarget
 ```
 >Note: If you need several @(Before/After)MethodInGroups you can assign them priority 
 e.g. ```@BeforeMethodInGroups(priority = 1)```. Methods with lower number are executed first just like in TestNG
+>Note: You can inject the following objects into MethodInGroups methods: ```ITestResult```, ```Method```, ```ITestContext```, ```XmlTest``` 
 
 ### OrderByGroupsListener
 ```
@@ -120,8 +121,9 @@ q second
 w second
 ```
 > Note: By Default groups are not sorted. 
-If you need to establish the dependency between groups you have to create method in your test class
- which is annotated with ```@GroupOrder``` and returns ```String[]``` populated with names of groups in your custom order
+If you need to establish the dependency between groups you have two options:
+>1. Add ```@GroupOrder``` annotation to the test class and define order via ```groups``` property;
+>2. create method in your test class which is annotated with ```@GroupOrder``` and returns ```List<String>``` populated with names of groups in your custom order just like below
  ```
 @GroupOrder
 public String[] groupOrder(){
