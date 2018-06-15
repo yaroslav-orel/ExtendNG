@@ -1,4 +1,4 @@
-Current
+1.1
 PR #31 Inject parameters into MethodInGroups
 PR #27 Make sure inherited methods are first for OrderByDeclaration
 PR #27 Cover special cases in OrderByGroupsListener
