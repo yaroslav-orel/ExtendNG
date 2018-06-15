@@ -127,8 +127,8 @@ If you need to establish the dependency between groups you have two options:
 >2. create method in your test class which is annotated with ```@GroupOrder``` and returns ```List<String>``` populated with names of groups in your custom order just like below
  ```
 @GroupOrder
-public String[] groupOrder(){
-    return new String[]{"first", "second", "third"};
+public List<String> groupOrder(){
+    return asList("first", "second", "third");
  }
  ```
 
