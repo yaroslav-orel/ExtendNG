@@ -11,13 +11,14 @@ import java.util.Comparator;
 import static com.google.common.collect.Sets.intersection;
 import static com.google.common.collect.Sets.newHashSet;
 import static java.util.Comparator.comparingInt;
+import static java.util.Objects.nonNull;
 import static org.extendng.ReflectionUtils.*;
 
 public class MethodInGroupsListener implements IInvokedMethodListener {
 
     @Override
     public void beforeInvocation(IInvokedMethod iInvokedMethod, ITestResult iTestResult) {
-        if(shouldListen(iInvokedMethod)){
+        if(isTestEligibleForWrapping(iInvokedMethod)){
             getAllMethods(iInvokedMethod.getTestMethod().getRealClass(), new ArrayList<>()).stream()
                     .filter(MethodInGroupsListener::hasBeforeMethodAnnotation)
                     .filter(method -> hasTheSameBeforeMethodGroupAsTest(method, iInvokedMethod))
@@ -28,7 +29,7 @@ public class MethodInGroupsListener implements IInvokedMethodListener {
 
     @Override
     public void afterInvocation(IInvokedMethod iInvokedMethod, ITestResult iTestResult) {
-        if(shouldListen(iInvokedMethod)){
+        if(isTestEligibleForWrapping(iInvokedMethod)){
             getAllMethods(iInvokedMethod.getTestMethod().getRealClass(), new ArrayList<>()).stream()
                     .filter(MethodInGroupsListener::hasAfterMethodAnnotation)
                     .filter(method -> hasTheSameAfterMethodGroupAsTest(method, iInvokedMethod))
@@ -37,8 +38,14 @@ public class MethodInGroupsListener implements IInvokedMethodListener {
         }
     }
 
+    private static boolean isTestEligibleForWrapping(IInvokedMethod invokedMethod){
+        return invokedMethod.isTestMethod() &&
+                shouldListen(invokedMethod) &&
+                nonNull(invokedMethod.getTestResult().getInstance());
+    }
+
     private static boolean shouldListen(IInvokedMethod method){
-        return method.isTestMethod() && shouldBeInvoked(method.getTestMethod().getRealClass(), MethodInGroupsListener.class);
+        return shouldBeInvoked(method.getTestMethod().getRealClass(), MethodInGroupsListener.class);
     }
 
     private static boolean hasBeforeMethodAnnotation(Method method){

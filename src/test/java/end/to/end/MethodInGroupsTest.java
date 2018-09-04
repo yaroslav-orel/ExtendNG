@@ -1,9 +1,13 @@
 package end.to.end;
 
+import lombok.val;
 import org.assertj.core.api.SoftAssertions;
 import org.testng.annotations.Test;
 import testclasses.methodingroups.*;
+import util.InvokedMethodNameListener;
 import util.TestUtils;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class MethodInGroupsTest {
 
@@ -70,5 +74,12 @@ public class MethodInGroupsTest {
         softly.assertThat(BaseClass.isBeforeCalled).isTrue();
         softly.assertThat(BaseClass.isAfterCalled).isTrue();
         softly.assertAll();
+    }
+
+    @Test
+    public void methodInGroupsSkippedByBeforeClass(){
+        val listener = TestUtils.run(new InvokedMethodNameListener(), IgnoreSkippedTest.class);
+
+        assertThat(listener.getInvokedMethodNames()).contains("skipped()");
     }
 }
