@@ -21,13 +21,13 @@ Library which provides set of convenient listeners to reduce boilerplate TestNG 
 <dependency>
 	<groupId>com.github.yaroslav-orel</groupId>
 	<artifactId>ExtendNG</artifactId>
-	<version>1.1</version>
+	<version>1.1.1</version>
 </dependency>
 ```
 
 ### Gradle
 ```
-testCompile 'com.github.yaroslav-orel:ExtendNG:1.1'
+testCompile 'com.github.yaroslav-orel:ExtendNG:1.1.1'
 ```
 
 # Examples
