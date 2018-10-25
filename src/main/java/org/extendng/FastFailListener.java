@@ -30,7 +30,8 @@ public class FastFailListener implements IInvokedMethodListener {
 
 
     private boolean shouldListen(ITestResult testResult){
-        return shouldBeInvoked(testResult.getInstance().getClass(), FastFailListener.class);
+        return testResult.getInstance() != null &&
+                shouldBeInvoked(testResult.getInstance().getClass(), FastFailListener.class);
     }
 
     private boolean currentTestFailed(ITestResult testResult){
