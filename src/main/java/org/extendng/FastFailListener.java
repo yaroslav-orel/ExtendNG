@@ -24,7 +24,7 @@ public class FastFailListener implements IInvokedMethodListener {
 
     @Override
     public void afterInvocation(IInvokedMethod method, ITestResult testResult) {
-        if(shouldListen(testResult) && currentTestFailed(testResult))
+        if(shouldListen(testResult) && !previouslyClassFailed(testResult) && currentTestFailed(testResult))
                 markTestClassAsFailed(testResult, method);
     }
 
