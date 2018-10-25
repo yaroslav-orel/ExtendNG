@@ -4,8 +4,11 @@ import lombok.val;
 import org.assertj.core.api.SoftAssertions;
 import org.testng.annotations.Test;
 import testclasses.fastfail.StopIfFailedTest;
+import testclasses.fastfail.StopIfFailedWithGroupsTest;
 import util.InvokedMethodNameListener;
 import util.TestUtils;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class FastFailTest {
 
@@ -30,5 +33,13 @@ public class FastFailTest {
         softly.assertThat(orderListener.getResult("doesNotRunAfterException2()").getThrowable().getMessage())
                 .isEqualTo("Skipped because of the failed test 'throwsException'");
         softly.assertAll();
+    }
+
+    //If there's group configuration method in test class NPE is thrown if not handled in listener
+    @Test
+    public void fastFailWithGroupsDoesntThrowException(){
+        val orderListener = TestUtils.run(new InvokedMethodNameListener(), StopIfFailedWithGroupsTest.class);
+
+        assertThat(orderListener.getInvokedMethodNames()).containsExactly("throwsException()", "doesNotRunAfterException()");
     }
 }
