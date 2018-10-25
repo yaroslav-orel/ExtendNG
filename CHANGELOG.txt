@@ -1,3 +1,7 @@
+1.1.2
+PR #42 Fix FastFailListener skip message
+PR #43 Fix NPE in FastFailListener when there's group configuration method
+
 1.1.1
 PR #38 Do not run MethodInGroups if BeforeClass has failed
 
