@@ -19,4 +19,16 @@ public class FastFailTest {
         softly.assertThat(orderListener.getSkippedMethodNames()).containsExactly("doesNotRunAfterException1()", "doesNotRunAfterException2()");
         softly.assertAll();
     }
+
+    @Test
+    public void fastFailCorrectMessage(){
+        val orderListener = TestUtils.run(new InvokedMethodNameListener(), StopIfFailedTest.class);
+
+        SoftAssertions softly = new SoftAssertions();
+        softly.assertThat(orderListener.getResult("doesNotRunAfterException1()").getThrowable().getMessage())
+                .isEqualTo("Skipped because of the failed test 'throwsException'");
+        softly.assertThat(orderListener.getResult("doesNotRunAfterException2()").getThrowable().getMessage())
+                .isEqualTo("Skipped because of the failed test 'throwsException'");
+        softly.assertAll();
+    }
 }

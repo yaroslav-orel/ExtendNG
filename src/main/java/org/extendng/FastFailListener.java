@@ -18,13 +18,13 @@ public class FastFailListener implements IInvokedMethodListener {
 
     @Override
     public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {
-        if(shouldListen(testResult) && previousTestFailed(testResult))
+        if(shouldListen(testResult) && previouslyClassFailed(testResult))
                 skipTest(testResult);
     }
 
     @Override
     public void afterInvocation(IInvokedMethod method, ITestResult testResult) {
-        if(shouldListen(testResult) && currentTestFailed(testResult))
+        if(shouldListen(testResult) && !previouslyClassFailed(testResult) && currentTestFailed(testResult))
                 markTestClassAsFailed(testResult, method);
     }
 
@@ -37,7 +37,7 @@ public class FastFailListener implements IInvokedMethodListener {
         return testResult.getThrowable() != null;
     }
 
-    private boolean previousTestFailed(ITestResult testResult){
+    private boolean previouslyClassFailed(ITestResult testResult){
         return failedClasses.containsKey(testResult.getInstance());
     }
 
